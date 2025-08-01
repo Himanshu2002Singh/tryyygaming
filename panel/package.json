@@ -1,0 +1,43 @@
+{
+  "name": "gopanel",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@react-oauth/google": "^0.12.2",
+    "axios": "^1.8.4",
+    "framer-motion": "^12.6.3",
+    "html2canvas": "^1.4.1",
+    "html2canvas-pro": "^1.5.8",
+    "next": "15.2.0",
+    "number-to-words": "^1.2.4",
+    "react": "^19.0.0",
+    "react-datepicker": "^8.4.0",
+    "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
+    "react-markdown": "^10.1.0",
+    "react-modal": "^3.16.3",
+    "react-paginate": "^8.3.0",
+    "react-phone-input-2": "^2.15.1",
+    "react-phone-number-input": "^3.4.12",
+    "react-toastify": "^11.0.5",
+    "recharts": "^2.15.1",
+    "remark-breaks": "^4.0.0",
+    "vaul": "^1.1.2"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "22.13.10",
+    "@types/react": "19.0.10",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.0",
+    "tailwindcss": "^4"
+  }
+}
