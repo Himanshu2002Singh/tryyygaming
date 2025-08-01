@@ -119,7 +119,7 @@ function PanelTransactionContent() {
                 <img
                   src={panelData.panelDetails.logo}
                   alt="logo"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
@@ -129,6 +129,7 @@ function PanelTransactionContent() {
             </div>
             <div className="flex-1">
               <h1 className="text-white text-xs">
+                {" "}
                 {panelData?.panelDetails.name}
               </h1>
               <p className="text-gray-400 text-sm">{panelData?.loginurl}</p>
@@ -231,11 +232,11 @@ function PanelTransactionContent() {
                       src={action.PanelPurchase.panelDetails.logo} // Correct path to logo
                       alt={action.PanelPurchase.panelDetails.name}
                       className="w-10 rounded-full h-10 object-contain"
-                      onError={(e) => {
-                        // Fallback image if logo fails to load
-                        e.target.src = "/default-panel-logo.png";
-                        e.target.onerror = null;
-                      }}
+                      // onError={(e) => {
+                      //   // Fallback image if logo fails to load
+                      //   e.target.src = "/default-panel-logo.png";
+                      //   e.target.onerror = null;
+                      // }}
                     />
                     <div className="flex flex-col">
                       <h3>{action.description}</h3>
@@ -257,6 +258,40 @@ function PanelTransactionContent() {
                     </span>
                   </div>
                 </div>
+                {/* <div className="flex justify-between items-center mb-2">
+                  <span className="text-white font-medium">
+                    {action.type.charAt(0).toUpperCase() + action.type.slice(1)}
+                  </span>
+                  <span
+                    className={`px-2 py-1 rounded ${
+                      action.status === "Approved"
+                        ? "bg-green-600"
+                        : action.status === "Pending"
+                        ? "bg-yellow-600"
+                        : "bg-red-600"
+                    }`}
+                  >
+                    {action.status}
+                  </span>
+                </div> */}
+                {/* <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <p className="text-gray-400">Coins:</p>
+                    <p className="text-white">{action.coins}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-400">Amount:</p>
+                    <p className="text-white">₹{action.totalAmount}</p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="text-gray-400">Description:</p>
+                    <p className="text-white">{action.description}</p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="text-gray-400">Date:</p>
+                    <p className="text-white">{formatDate(action.createdAt)}</p>
+                  </div>
+                </div> */}
               </div>
             ))}
           </div>

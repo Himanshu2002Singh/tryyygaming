@@ -67,9 +67,9 @@ const AccountStatementUser = ({ user }) => {
         <td className="px-4 py-2">{transaction.referenceId}</td>
         <td className="px-4 py-2">{transaction.description}</td>
         <td className="px-4 py-2 text-right">{transaction.coins}</td>
-        {/* <td className="px-4 py-2 text-right">
+        <td className="px-4 py-2 text-right">
           {transaction.amount} {transaction.currency}
-        </td> */}
+        </td>
         <td
           className={`px-4 py-2 font-semibold ${getStatusColor(
             transaction.status
@@ -105,7 +105,7 @@ const AccountStatementUser = ({ user }) => {
               <th className="px-4 py-2 text-left">Reference ID</th>
               <th className="px-4 py-2 text-left">Description</th>
               <th className="px-4 py-2 text-right">Coins</th>
-             
+              <th className="px-4 py-2 text-right">Amount</th>
               <th className="px-4 py-2">Status</th>
               <th className="px-4 py-2">Date</th>
             </tr>

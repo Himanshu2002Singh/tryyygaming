@@ -225,12 +225,12 @@ const TransactionHistory = () => {
                         <span>{transaction.coins.toLocaleString()}</span>
                       </div>
 
-                      {/* {transaction.rate && (
+                      {transaction.rate && (
                         <div className="text-xs flex justify-between items-center mb-2">
                           <span className="text-gray-400">Rate per coin</span>
                           <span>{formatAmount(transaction.rate)}</span>
                         </div>
-                      )} */}
+                      )}
 
                       {transaction.amount && (
                         <div className="text-xs flex justify-between items-center mb-2">
@@ -259,11 +259,9 @@ const TransactionHistory = () => {
 
                       {transaction.status === "Rejected" &&
                         transaction.rejectReason && (
-                          <div className="flex text-xs justify-between items-center mb-2">
-                            <span className="text-xs text-gray-400">
-                              Reason
-                            </span>
-                            <span className="text-xs text-white">
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="text-gray-400">Reason</span>
+                            <span className="text-red-500">
                               {transaction.rejectReason}
                             </span>
                           </div>
@@ -271,9 +269,9 @@ const TransactionHistory = () => {
 
                       {transaction.metadata &&
                         transaction.metadata.rejectReason && (
-                          <div className="flex text-xs justify-between items-center mb-2">
+                          <div className="flex justify-between items-center mb-2">
                             <span className="text-gray-400">Reason</span>
-                            <span className="text-white">
+                            <span className="text-red-500">
                               {transaction.metadata.rejectReason}
                             </span>
                           </div>

@@ -9,15 +9,15 @@ import UserInfoModal from "../../components/userinfomodal";
 import { useBottomSheet } from "../../context/BottomSheetAdmin";
 import ReactPaginate from "react-paginate";
 import PurchasesUserModal from "../../components/userpaneldetails";
-import Accountstatementuser from "../../components/payment/accountstatementuser";
+import AccountStatementUser from "../../components/payment/accountstatementuser";
 
 // Add this component to your AdminUsersPage file
 function AddUserModal({ isOpen, onClose, onUserAdded }) {
   const [formData, setFormData] = useState({
     name: "",
+    // email: "",
     username: "",
     phone: "",
-
     password: "",
     // alternateNumber: "",
     points: 0,
@@ -304,9 +304,9 @@ export default function AdminUsersPage() {
     return () => clearTimeout(debounceTimer); // Cleanup on unmount or search term change
   }, [searchTerm, currentPage]);
   const [editForm, setEditForm] = useState({
-    // name: "",
-    // email: "",
-    // phone: "",
+    name: "",
+    email: "",
+    phone: "",
     points: "",
     isActive: true,
     password: "",
@@ -353,9 +353,9 @@ export default function AdminUsersPage() {
   const handleEdit = (user) => {
     setSelectedUser(user);
     setEditForm({
-      // name: user.name || "",
-      // email: user.email || "",
-      // phone: user.phone || "",
+      name: user.name || "",
+      email: user.email || "",
+      phone: user.phone || "",
       points: user.points || 0,
       isActive: user.isActive,
       password: "",
@@ -706,9 +706,9 @@ export default function AdminUsersPage() {
                 {/* <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap border border-white">
                   Name
                 </th> */}
-                {/* <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap border border-white">
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap border border-white">
                   Credit
-                </th> */}
+                </th>
                 {/* <th className="sm:py-3 px-4 text-left text-xs font-medium uppercase tracking-wider border-b border-gray-600">
                   Phone
                 </th> */}
@@ -722,7 +722,7 @@ export default function AdminUsersPage() {
                   Banking
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap border border-white">
-                  IDs
+                  Panels
                 </th>
                 {/* <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap border border-white">
                   Last Login
@@ -736,44 +736,45 @@ export default function AdminUsersPage() {
               {filteredUsers.map((user, count) => (
                 <tr
                   key={user.id}
-                  className={`${
-                    count % 2 === 0 ? "bg-white" : "bg-[#E7E7E7]"
-                  }  text-black`}
+                  className={`text-sm hover:bg-[#dbd7d2] transition-colors text-black ${
+                    (startIndex + count) % 2 === 0
+                      ? "bg-[#dbd7d2]"
+                      : "bg-[#f5f5f5]"
+                  }`}
                 >
-                  <td className="px-4 sm:py-2 whitespace-nowrap border">
+                  <td className="px-4 sm:py-3 whitespace-nowrap border">
                     {startIndex + count + 1}
                   </td>
-
                   {/* <td className="px-4 sm:py-3 whitespace-nowrap border">
                     {user.id || "N/A"}
                   </td> */}
-                  <td className="px-4 sm:py-2 whitespace-nowrap border">
+                  <td className="px-4 sm:py-3 whitespace-nowrap border">
                     {user.username || "N/A"}
                   </td>
                   {/* <td className="px-4 sm:py-3 whitespace-nowrap border">
                     {user.name || "N/A"}
                   </td> */}
 
-                  {/* <td className="px-4 sm:py-3 whitespace-nowrap border">
+                  <td className="px-4 sm:py-3 whitespace-nowrap border">
                     {user.credit || 0}
-                  </td> */}
+                  </td>
                   {/* <td className="py-3 px-4 whitespace-nowrap">
                     {user.email || "N/A"}
                   </td> */}
                   {/* <td className="py-3 px-4 whitespace-nowrap">
                     {user.phone || "N/A"}
                   </td> */}
-                  <td className="px-4 sm:py-2 whitespace-nowrap border">
-                    <span className="font-bold text-[#009900]">
+                  <td className="px-4 sm:py-3 whitespace-nowrap border">
+                    <span className="font-bold font-semibold text-[#009900]">
                       {user.points}
                     </span>
                   </td>
-                  <td className="px-4 sm:py-2 whitespace-nowrap border">
-                    <span className="font-bold text-[#ff8c00]">
+                  <td className="px-4 sm:py-3 whitespace-nowrap border">
+                    <span className="font-bold font-semibold text-[#ff8c00]">
                       {user.expense}
                     </span>
                   </td>
-                  <td className="px-4 sm:py-2 whitespace-nowrap border">
+                  <td className="px-4 sm:py-3 whitespace-nowrap border">
                     <button
                       // onClick={() => openBottomSheet((<openModal user />)}
                       onClick={() => openModal("add", user.id, user)}
@@ -788,22 +789,22 @@ export default function AdminUsersPage() {
                     >
                       W
                     </button>
-                    {/* <button
+                    <button
+                      onClick={() => openModal("credit", user.id, user)}
+                      className=" px-3 py-1 mx-2 rounded-full bg-[#ffef00] text-black"
+                    >
+                      C
+                    </button>
+                    <button
                       onClick={() =>
                         openBottomSheet(() => (
-                          <Accountstatementuser user={user} />
+                          <AccountStatementUser user={user} />
                         ))
                       }
                       className=" px-3 py-1 mx-2 rounded-full bg-blue-500 text-white"
                     >
                       A
-                    </button> */}
-                    {/* <button
-                      onClick={() => openModal("credit", user.id, user)}
-                      className=" px-3 py-1 mx-2 rounded-full bg-[#ffef00] text-black"
-                    >
-                      C
-                    </button> */}
+                    </button>
                   </td>
                   {/* <td className="px-4 sm:py-3 whitespace-nowrap border">
                     <span
@@ -816,14 +817,12 @@ export default function AdminUsersPage() {
                       {user.isActive ? "Active" : "Inactive"}
                     </span>
                   </td> */}
-                  <td className="px-4 sm:py-2 whitespace-nowrap border">
+                  <td className="px-4 sm:py-3 whitespace-nowrap border">
                     <div className="flex items-center justify-between">
                       <span>{user.panelPurchases.length}</span>
                       <button
                         onClick={() => handleShowPurchases(user)}
-                        className={`py-1.5 px-2 max-[450px]:text-[10px] text-xs border border-white
-                      text-black
-                    bg-[var(--color-primary)] rounded-full transition duration-300 shadow-sm`}
+                        className="text-black hover:underline text-left"
                       >
                         View
                       </button>
@@ -834,7 +833,7 @@ export default function AdminUsersPage() {
                       ? new Date(user.lastLogin).toLocaleString()
                       : "Never"}
                   </td> */}
-                  <td className="px-4 sm:py-2 whitespace-nowrap border">
+                  <td className="px-4 sm:py-3 whitespace-nowrap border">
                     <div className="flex space-x-2">
                       <button
                         onClick={() => handleEdit(user)}
@@ -858,16 +857,6 @@ export default function AdminUsersPage() {
                         {/* Edit */}
                       </button>
                       <button
-                        onClick={() =>
-                          openBottomSheet(() => (
-                            <Accountstatementuser user={user} />
-                          ))
-                        }
-                        className=" px-3 py-1 mx-2 rounded-full bg-blue-500 text-white"
-                      >
-                        S
-                      </button>
-                      <button
                         onClick={() => toggleUserStatus(user.id, user.isActive)}
                         className={`${
                           user.isActive
@@ -878,7 +867,7 @@ export default function AdminUsersPage() {
                         {user.isActive ? (
                           <>
                             <svg
-                              className="w-3 h-3 "
+                              className="w-3 h-3 mr-1"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -895,7 +884,7 @@ export default function AdminUsersPage() {
                         ) : (
                           <>
                             <svg
-                              className="w-3 h-3 "
+                              className="w-3 h-3 mr-1"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -931,14 +920,11 @@ export default function AdminUsersPage() {
                         </svg>
                       </button> */}
                       <button
-                        disabled={user.points != 0}
                         onClick={() => handleDelete(user.id)}
-                        className={`${
-                          user.points != 0 ? "bg-red-300" : "bg-[#ce2029]"
-                        } hover:bg-red-650 text-white px-3 py-2 rounded-full text-xs transition-colors flex items-center`}
+                        className="bg-[#ce2029] hover:bg-red-650 text-white px-3 py-2 rounded-full text-xs transition-colors flex items-center"
                       >
                         <svg
-                          className="w-3 h-3"
+                          className="w-3 h-3 mr-1"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -969,7 +955,7 @@ export default function AdminUsersPage() {
               ))}
               {filteredUsers.length === 0 && (
                 <tr>
-                  <td colSpan="7" className="py-8 text-center text-black-400">
+                  <td colSpan="7" className="py-8 text-center text-black">
                     No users found
                   </td>
                 </tr>
@@ -988,9 +974,9 @@ export default function AdminUsersPage() {
               onPageChange={handlePageClick}
               containerClassName="flex gap-1"
               pageClassName="pagination-item"
-              pageLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-black-400 bg-white border border-black-300 hover:bg-black-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              pageLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               previousClassName="pagination-item"
-              previousLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-black-500 bg-white border border-black-300 hover:bg-black-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              previousLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               nextClassName="pagination-item"
               nextLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               breakClassName="pagination-item"
@@ -1005,20 +991,20 @@ export default function AdminUsersPage() {
 
       {/* Edit User Modal */}
       {modalOpen && selectedUser && (
-        <div className="fixed inset-0 flex items-center justify-center bg-transparent bg-opacity-50 z-50">
-          <div className="w-full max-w-lg bg-black py-6 px-4 rounded-lg shadow-2xl relative">
-            <h2 className="text-xl font-bold mb-4 text-white pb-2 border-b border-[var(--color-primary)]">
-              Change Password
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="w-full max-w-lg bg-white py-6 px-4 rounded-lg shadow-2xl relative">
+            <h2 className="text-xl font-bold mb-4 text-cyan-400 pb-2 border-b border-gray-700">
+              Edit User
             </h2>
-            {/* 
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1 text-black-300">
+
+            {/* <div className="mb-4">
+              <label className="block text-sm font-medium mb-1 text-gray-300">
                 Name
               </label>
               <input
                 type="text"
                 disabled
-                className="w-full p-2 border rounded bg-black-700 border-black-600 text-black-400focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                className="w-full p-2 border rounded bg-gray-700 border-gray-600 text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
                 value={editForm.name}
                 onChange={(e) =>
                   setEditForm({ ...editForm, name: e.target.value })
@@ -1027,13 +1013,13 @@ export default function AdminUsersPage() {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1 text-black-300">
+              <label className="block text-sm font-medium mb-1 text-gray-300">
                 Email
               </label>
               <input
                 type="email"
                 disabled
-                className="w-full p-2 border rounded bg-black-700 border-black-600 text-black-400focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                className="w-full p-2 border rounded bg-gray-700 border-gray-600 text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
                 value={editForm.email}
                 onChange={(e) =>
                   setEditForm({ ...editForm, email: e.target.value })
@@ -1042,13 +1028,13 @@ export default function AdminUsersPage() {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1 text-black-300">
+              <label className="block text-sm font-medium mb-1 text-gray-300">
                 Phone
               </label>
               <input
                 type="text"
                 disabled
-                className="w-full p-2 border rounded bg-black-700 border-black-600 text-black-400focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                className="w-full p-2 border rounded bg-gray-700 border-gray-600 text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
                 value={editForm.phone}
                 onChange={(e) =>
                   setEditForm({ ...editForm, phone: e.target.value })
@@ -1056,12 +1042,12 @@ export default function AdminUsersPage() {
               />
             </div> */}
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1 text-white">
+              <label className="block text-sm font-medium mb-1 text-black-300">
                 Password
               </label>
               <input
                 type="text"
-                className="w-full p-2 border rounded bg-white border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                className="w-full p-2 border rounded bg-black-700 border-black-600 text-black-400focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
                 value={editForm.password}
                 onChange={(e) =>
                   setEditForm({ ...editForm, password: e.target.value })
@@ -1069,7 +1055,7 @@ export default function AdminUsersPage() {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1 text-white">
+              <label className="block text-sm font-medium mb-1 text-black-300">
                 Confirm Password
               </label>
               <input
@@ -1091,12 +1077,12 @@ export default function AdminUsersPage() {
             </div>
 
             {/* <div className="mb-4">
-              <label className="block text-sm font-medium mb-1 text-black-300">
+              <label className="block text-sm font-medium mb-1 text-gray-300">
                 Points
               </label>
               <input
                 type="number"
-                className="w-full p-2 border rounded bg-black-700 border-black-600 text-black-400focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                className="w-full p-2 border rounded bg-gray-700 border-gray-600 text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
                 value={editForm.points}
                 onChange={(e) =>
                   setEditForm({
@@ -1117,20 +1103,20 @@ export default function AdminUsersPage() {
                     setEditForm({ ...editForm, isActive: e.target.checked })
                   }
                 />
-                <span className="ml-2 text-black-300">Active</span>
+                <span className="ml-2 text-gray-300">Active</span>
               </label>
             </div> */}
 
             <div className="flex justify-end space-x-3">
               <button
                 onClick={() => setModalOpen(false)}
-                className="px-4 py-2 border border-yellow rounded bg-white transition-colors text-black-300"
+                className="px-4 py-2 border border-gray-600 rounded hover:bg-gray-700 transition-colors text-black-300"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
-                className="px-4 py-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary)] text-white rounded transition-colors"
+                className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded transition-colors"
               >
                 Save
               </button>

@@ -17,7 +17,7 @@ const RequestPayment = () => {
   };
 
   return (
-    <div className="w-full bg-[#D9D9D9] text-black">
+    <div className="w-full bg-black">
       <MainTabs activeTab={activeTab} onTabChange={handleTabChange} />
       <div className="px-6 py-4">
         {activeTab === "wallet" && <WalletRequestsContent />}

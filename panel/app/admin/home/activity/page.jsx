@@ -176,14 +176,16 @@ const Activity = () => {
         {/* Header */}
         <div className="p-6 border-b border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center">
           <div>
-            <h1 className="text-2xl font-bold text-black">Activity Logs</h1>
+            <h1 className="text-2xl font-bold text-black">
+              Activity Logs
+            </h1>
             <p className="text-black mt-1">
               Monitor all admin actions and activities in the system
             </p>
           </div>
           <button
             onClick={resetFilters}
-            className="mt-4 text-black md:mt-0 flex items-center gap-2 px-4 py-2 bg-white  rounded-md  transition-colors shadow-2xl"
+            className="mt-4 text-black md:mt-0 flex items-center gap-2 px-4 py-2 bg-white  rounded-md  transition-colors shadow-2xl" 
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -409,7 +411,7 @@ const Activity = () => {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                   >
-                    Date & Time (m/d/y)
+                    Date & Time
                   </th>
                 </tr>
               </thead>

@@ -120,7 +120,7 @@ const Banner = () => {
       if (editingBanner) {
         // Update existing banner
         response = await axios.put(
-          `${API_URL}/admin/banner/${editingBanner.id}`,
+          `${API_URL}/admin/banners/${editingBanner.id}`,
           formDataToSend,
           {
             headers: {
@@ -218,7 +218,7 @@ const Banner = () => {
     <div className="w-full h-screen bg-[#D9D9D9] text-black">
       {/* Main content area */}
       <div className="w-full flex-1 p-6 transition-all duration-300">
-        <div className="">
+        <div className="rounded-lg shadow bg-[#a9a9a9]">
           <div className="p-0 sm:p-6">
             <h1 className="text-xl font-semibold text-black mb-6">
               Banner Management
@@ -248,23 +248,23 @@ const Banner = () => {
 
             {/* Table */}
             <div className="overflow-x-auto">
-              <table className="min-w-full bg-white border rounded-lg overflow-hidden">
-                <thead className="bg-[var(--color-primary)] text-black">
+              <table className="min-w-full bg-white shadow-2xl">
+                <thead className="bg-[var(--color-primary)] text-black ">
                   <tr>
-                    <th className="sm:py-3 px-6 text-left text-sm font-medium">
+                    <th className="sm:py-3 px-6 text-left text-sm font-medium border border-black">
                       S.No
                     </th>
-                    <th className="sm:py-3 px-6 text-left text-sm font-medium">
+                    <th className="sm:py-3 px-6 text-left text-sm font-medium border border-black">
                       Image
                     </th>
-                    <th className="sm:py-3 px-6 text-left text-sm font-medium">
+                    <th className="sm:py-3 px-6 text-left text-sm font-medium border border-black">
                       Text
                     </th>
-                    <th className="sm:py-3 px-6 text-left text-sm font-medium">
+                    <th className="sm:py-3 px-6 text-left text-sm font-medium border border-black">
                       URL
                     </th>
 
-                    <th className="sm:py-3 px-6 text-left text-sm font-medium">
+                    <th className="sm:py-3 px-6 text-left text-sm font-medium border border-black">
                       Actions
                     </th>
                   </tr>
@@ -290,18 +290,20 @@ const Banner = () => {
                       </td>
                     </tr>
                   )}
-                  {!isLoading &&
-                    filteredBanners.map((banner, index) => (
-                      <tr
-                        key={banner.id}
-                        className={`${
-                          index % 2 === 0 ? "bg-white" : "bg-[#E7E7E7]"
-                        }  text-black`}
-                      >
-                        <td className="px-4 sm:py-3 whitespace-nowrap border">
-                          {index + 1}
-                        </td>
-                        <td className="px-4 sm:py-3 whitespace-nowrap border">
+                 {!isLoading &&
+  filteredBanners.map((banner, index) => (
+    <tr 
+      key={banner.id} 
+      className={`
+        hover:bg-[#dbd7d2] 
+        ${index % 2 === 0 ? 'bg-[#f5f5f5]' : 'bg-[#dbd7d2]'}
+        text-black
+      `}
+    >
+      <td className="py-4 px-6 text-sm text-black border border-black">
+        {index + 1}
+      </td>
+                        <td className="py-4 px-6 text-sm border border-black">
                           <div className="w-16 h-16 overflow-hidden rounded">
                             <img
                               src={banner.image}
@@ -310,10 +312,10 @@ const Banner = () => {
                             />
                           </div>
                         </td>
-                        <td className="px-4 sm:py-3 whitespace-nowrap border">
+                        <td className="py-4 px-6 text-sm text-black border border-black">
                           {banner.text || "-"}
                         </td>
-                        <td className="px-4 sm:py-3 whitespace-nowrap border">
+                        <td className="py-4 px-6 text-sm text-black border border-black">
                           {banner.url ? (
                             <a
                               href={banner.url}
@@ -339,7 +341,7 @@ const Banner = () => {
                             {banner.isActive ? "Active" : "Inactive"}
                           </button>
                         </td> */}
-                        <td className="px-4 sm:py-3 whitespace-nowrap border">
+                        <td className="py-4 px-6 text-sm text-black border border-black">
                           <div className="flex space-x-2">
                             <button
                               onClick={() => handleEditBanner(banner)}
@@ -481,8 +483,8 @@ const Banner = () => {
       {/* Overlay for when side form is open */}
       {showSideForm && (
         <div
-          className="fixed inset-0 bg-white bg-opacity-50 z-0"
-          onClick={handleCloseForm}
+        className="fixed inset-0  backdrop-blur-[3px] z-0"
+        onClick={handleCloseForm}
         />
       )}
     </div>

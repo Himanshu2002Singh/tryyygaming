@@ -9,12 +9,8 @@ import { AuthContext } from "../context/authprovider";
 import { useBottomSheet } from "../context/BottomSheet";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { BsGoogle } from "react-icons/bs";
-import { GoogleLogin } from "@react-oauth/google";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { useGoogleLogin } from "@react-oauth/google";
 
-const PhoneOtpScreen = ({ activeWhatsapp }) => {
+const PhoneOtpScreen = () => {
   const { fetchUserDetails } = useContext(AuthContext);
 
   const [step, setStep] = useState(1);
@@ -22,25 +18,13 @@ const PhoneOtpScreen = ({ activeWhatsapp }) => {
   const [otpDigits, setOtpDigits] = useState(["", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = useState("");
-  const { openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { closeBottomSheet } = useBottomSheet();
   const { loginWithDemoAccount } = useContext(AuthContext);
   const [resendTimer, setResendTimer] = useState(0);
   const [passwordLogin, setPasswordLogin] = useState(false);
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   // Timer effect for resend OTP countdown
-  useEffect(() => {
-    if (step === 3) {
-      // When we reach profile step, close current bottom sheet and open new one with preventClose
-      closeBottomSheet();
-      setTimeout(() => {
-        openBottomSheet(() => <ProfilePage />, {
-          preventClose: true,
-          bgColor: "#1e1e1e",
-        });
-      }, 100);
-    }
-  }, [step]);
   useEffect(() => {
     let interval;
     if (resendTimer > 0) {
@@ -81,48 +65,7 @@ const PhoneOtpScreen = ({ activeWhatsapp }) => {
       setIsLoading(false);
     }
   };
-  const customgooglelogin = useGoogleLogin({
-    onSuccess: async (codeResponse) => {
-      try {
-        // Send authorization code to your backend
-        await handleGoogleSuccess(codeResponse);
-      } catch (error) {
-        console.error("Google login error", error);
-        alert("Google login failed");
-      }
-    },
-    onError: (errorResponse) => {
-      console.error("Google login failed", errorResponse);
-      alert("Google login failed");
-    },
-    flow: "auth-code",
-    scope: "openid email profile",
-  });
 
-  const handleGoogleSuccess = async (credentialResponse) => {
-    try {
-      const response = await axios.post(`${API_URL}/auth/google-login`, {
-        code: credentialResponse.code,
-      });
-
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        // Similar to your existing login flow
-        const resp = await fetchUserDetails();
-        if (resp) {
-          !resp.profilecompleted ? setStep(3) : closeBottomSheet();
-        }
-      }
-    } catch (error) {
-      console.error("Google login error", error);
-      alert("Google login failed");
-    }
-  };
-
-  const handleGoogleFailure = (error) => {
-    console.error("Google login failed", error);
-    alert("Google login failed");
-  };
   const handleResendOtp = async () => {
     try {
       setIsLoading(true);
@@ -297,51 +240,19 @@ const PhoneOtpScreen = ({ activeWhatsapp }) => {
             <div className="flex  justify-between gap-3">
               <button
                 type="submit"
-                className="w-3/6 bg-white gap-1 text-xs sm:text-xs hover:cursor-pointer text-black font-medium py-3 sm:px-4 px-2 rounded-lg transition duration-300 flex items-center justify-center"
+                className="w-full bg-white gap-1 text-xs sm:text-xs hover:cursor-pointer text-black font-medium py-3 sm:px-4 px-2 rounded-lg transition duration-300 flex items-center justify-center"
                 disabled={isLoading}
               >
                 <MdSms size={18} />
+                Get OTP on SMS
               </button>
-              <a
-                target="
-              _blank"
-                href={`https://wa.me/${activeWhatsapp}`}
-                className="w-3/6 bg-white gap-1 text-[10px] sm:text-xs hover:cursor-pointer text-black font-medium py-3 sm:px-4 px-2 rounded-lg transition duration-300 flex items-center justify-center"
-              >
-                <button
-                  // onClick={activeWhatsapp}
-                  type="button"
-                  disabled={isLoading}
-                >
-                  <FaWhatsapp size={18} color="green" />
-                  {/* Get OTP on Whatsapp */}
-                </button>
-              </a>
-              {/* <GoogleLogin
-                onSuccess={handleGoogleSuccess}
-                onError={handleGoogleFailure}
-                render={(renderProps) => (
-                  <button
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled || isLoading}
-                    className="w-3/6 bg-white gap-1 text-[10px] sm:text-xs hover:cursor-pointer text-black font-medium py-3 sm:px-4 px-2 rounded-lg transition duration-300 flex items-center justify-center"
-                  >
-                    <img
-                      src="/googlelogo.png"
-                      className="h-4"
-                      alt="Google Logo"
-                    />
-                  </button>
-                )}
-              /> */}
               <button
-                type="button"
-                onClick={() => customgooglelogin()}
+                type="submit"
                 className="w-full bg-white gap-1 text-[10px] sm:text-xs hover:cursor-pointer text-black font-medium py-3 sm:px-4 px-2 rounded-lg transition duration-300 flex items-center justify-center"
                 disabled={isLoading}
               >
-                <img src="/googlelogo.png" className="h-4" color="white" />
-                Fast Login
+                <FaWhatsapp size={18} color="green" />
+                Get OTP on Whatsapp
               </button>
             </div>
             <h5 className="text-center my-2 text-xs">OR</h5>
@@ -528,10 +439,9 @@ const PhoneOtpScreen = ({ activeWhatsapp }) => {
             </form>
           )}
         </div>
-      ) : //  : step === 3 ? (
-      //   <ProfilePage />
-      // )
-      null}
+      ) : step === 3 ? (
+        <ProfilePage />
+      ) : null}
     </div>
   );
 };

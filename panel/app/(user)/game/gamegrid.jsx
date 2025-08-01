@@ -472,7 +472,7 @@ const GameGrid = () => {
         ))}
       </div>
 
-      {/* <GameCategoryCard /> */}
+      <GameCategoryCard />
       {/* Other games */}
       <div className="grid my-2 grid-cols-4 gap-0.5 sm:grid-cols-5 sm:gap-1">
         {otherGames.map((game, id) => (

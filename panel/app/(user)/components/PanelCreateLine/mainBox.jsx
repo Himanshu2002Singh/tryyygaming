@@ -134,7 +134,7 @@ const WalletInterface = () => {
 
           {/* Logo */}
           <img
-            className="w-full h-auto object-cover min-w-[7rem] relative z-10"
+            className="w-full h-auto object-cover min-w-[6rem] relative z-10"
             src="logo-gs.png"
           />
 

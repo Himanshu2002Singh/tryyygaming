@@ -23,7 +23,7 @@ const AdminPaymentsidebar = ({ isOpen, toggleSidebar }) => {
     <>
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full z-40 bg-[var(--color-secondary)] text-white shadow-sm flex flex-col items-center py-4 transition-all duration-300 ease-in-out overflow-y-auto
+        className={`fixed top-0 left-0 h-full z-40 bg-gray-950 text-white shadow-sm flex flex-col items-center py-4 transition-all duration-300 ease-in-out overflow-y-auto
           ${isOpen ? "w-24 translate-x-0" : "w-24 -translate-x-full"}
           md:translate-x-0 md:relative md:w-24`}
       >
@@ -46,8 +46,8 @@ const AdminPaymentsidebar = ({ isOpen, toggleSidebar }) => {
                 <div
                   className={`flex flex-col items-center mb-6 cursor-pointer transition-all duration-300 ${
                     isActive
-                      ? "text-black border-l-3 bg-[var(--color-admin-secondary)] border-[var(--color-primary)] p-2 rounded-lg"
-                      : "text-white "
+                      ? "text-white border-l-3 border-[var(--color-primary)] p-2 rounded-lg"
+                      : "text-gray-400 hover:text-[var(--color-primary)]"
                   }`}
                 >
                   <div className="p-3 rounded-lg mb-1">{item.icon}</div>

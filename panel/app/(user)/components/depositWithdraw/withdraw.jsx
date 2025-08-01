@@ -89,9 +89,8 @@ const Withdraw = ({ openbankform }) => {
     // Validate form data
     if (
       !formData.useraccountHolderName ||
-      !formData.useraccountNo
-      // ||
-      // !formData.userifscCode
+      !formData.useraccountNo ||
+      !formData.userifscCode
     ) {
       toast.error("Please fill all required fields");
       setFormSubmitting(false);
@@ -172,12 +171,9 @@ const Withdraw = ({ openbankform }) => {
         //   refreshUserData();
         // }
         await closeBottomSheet();
-        openBottomSheet(
-          () => (
-            <MessageAlert message="Withdrawal request submitted successfully" />
-          ),
-          { closeicon: false }
-        );
+        await openBottomSheet(() => (
+          <MessageAlert message="Withdrawal request submitted successfully" />
+        ));
       } else {
         toast.error(response.data.message || "Failed to process withdrawal");
       }
@@ -234,9 +230,7 @@ const Withdraw = ({ openbankform }) => {
               />
             </div>
             <div>
-              <label className="text-xs block font-bold my-1">
-                IFSC Code (optional)
-              </label>
+              <label className="text-xs block font-bold my-1">IFSC Code</label>
               <input
                 type="text"
                 name="userifscCode"
@@ -244,7 +238,7 @@ const Withdraw = ({ openbankform }) => {
                 onChange={handleChange}
                 className="w-full px-2 py-2 text-xs mb-2 bg-[#111111] rounded-lg focus:outline-none text-white"
                 placeholder="Enter IFSC code"
-                // required
+                required
                 autoComplete="off"
               />
               {ifscLoading && (
@@ -354,7 +348,7 @@ const Withdraw = ({ openbankform }) => {
                 required
               />
               <p className="text-xs text-white mt-1 font-extralight tracking-wide">
-                Minimum withdrawal amount is 200 coins
+                Minimum withdrawal amount is 1000 coins
               </p>
             </div>
 

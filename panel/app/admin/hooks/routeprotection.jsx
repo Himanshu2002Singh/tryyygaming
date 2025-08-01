@@ -5,28 +5,20 @@ import { AdminAuthContext } from "../context/adminAuthcontext";
 
 // Mapping of routes to required permissions
 const routePermissions = {
-  "/admin/home/dashboard": "View Dashboard", // VIEW_DASHBOARD
-  // "/admin/home/request": "View Employees", // VIEW_EMPLOYEES
-  // "/admin/home/banking-request": "Deposit", // DEPOSIT
-  // "/admin/home/banking-request": "View Banking Requests",
-  "/admin/home/banking-request": "View Banking Requests",
-  "/admin/home/sitepanel-request": "View Panel Requests",
-
-  "/admin/home/users": "View Users", // VIEW_USERS
-  "/admin/home/banks": "Add Bank", // DEPOSIT
-  "/admin/home/banners": "Manage Banners", // MANAGE_BANNERS
-  // "/admin/home/posters": "Manage Posters", // MANAGE_POSTERS
-  "/admin/home/panels": "View Panel", // VIEW_PANEL
-  "/admin/home/employees": "View Employees", // VIEW_EMPLOYEES
-  "/admin/home/members": "View Employees", // VIEW_EMPLOYEES
-  "/admin/home/coins-request": "Deposit", // DEPOSIT
-  "/admin/home/activity": "See Activity", // SEE_ACTIVITY
-  "/admin/home/whatsapp": "WhatsApp Access", // SEE_ACTIVITY
-  "/admin/home/add-buttons": "Add Button", // SEE_ACTIVITY
-  "/admin/home/offer": "View Offers", // SEE_ACTIVITY
-
-  "/admin/home/chatmessages": "View Chat Messages", // VIEW_EMPLOYEES (Assuming internal messaging by employees)
-  "/admin/home/socialmedia": "Social Media Access", // SOCIAL_MEDIA_ACCESS
+  "/admin/home/dashboard": "View Dashboard",
+  "/admin/home/request": "View Employees",
+  "/admin/home/banking-request": "Deposit",
+  "/admin/home/sitepanel-request": "View Employees",
+  "/admin/home/users": "View Users",
+  "/admin/home/banks": "Deposit",
+  "/admin/home/banners": "Manage Banners",
+  "/admin/home/posters": "Manage Posters",
+  "/admin/home/panels": "View Employees",
+  "/admin/home/employees": "View Employees",
+  "/admin/home/members": "View Employees",
+  "/admin/home/coins-request": "Deposit",
+  "/admin/home/activity": "See Activity",
+  "/admin/home/chatmessages": "View Employees",
 };
 
 export function RouteProtection({ children }) {

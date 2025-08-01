@@ -13,14 +13,11 @@ const GoogleTranslate = () => {
   // Map of language codes to display codes
   const langMap = {
     en: "EN",
-    ne: "NE",
-    // hi: "HI",
+    hi: "HI",
     kn: "KN",
     ml: "ML",
     ta: "TA",
     te: "TE",
-    // Add Nepali
-
     // Add more languages as needed
   };
 
@@ -89,7 +86,7 @@ const GoogleTranslate = () => {
         new window.google.translate.TranslateElement(
           {
             pageLanguage: "en",
-            includedLanguages: "en,ne,kn,ml,ta,te", // Add more languages as needed
+            includedLanguages: "en,hi,kn,ml,ta,te",
             layout:
               window.google.translate.TranslateElement.InlineLayout.SIMPLE,
             autoDisplay: false,

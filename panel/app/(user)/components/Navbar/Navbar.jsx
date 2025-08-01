@@ -60,16 +60,6 @@ const Navbar = () => {
   const [activeSocial, setActiveSocial] = useState(null);
 
   useEffect(() => {
-    const fetchActiveWhatsapp = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/admin/active-whatsapp`);
-        setActiveWhatsapp(response.data.whatsapp);
-      } catch (error) {
-        console.error("Error fetching active WhatsApp:", error);
-        // Handle error, e.g., set a default value or display an error message
-        setActiveWhatsapp(null); // Or some default value
-      }
-    };
     const fetchActiveSocial = async () => {
       try {
         const response = await axios.get(`${API_URL}/admin/socials/active`);
@@ -77,14 +67,29 @@ const Navbar = () => {
           setActiveSocial(response.data.socialMedia);
         }
       } catch (error) {
-        console.log("Error fetching active social media:", error);
+        console.error("Error fetching active social media:", error);
       } finally {
-        // setLoading(false);
+        setLoading(false);
       }
     };
-    fetchActiveWhatsapp();
+
     fetchActiveSocial();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchActiveWhatsapp = async () => {
+  //     try {
+  //       const response = await axios.get(`${API_URL}/admin/active-whatsapp`);
+  //       setActiveWhatsapp(response.data.whatsapp);
+  //     } catch (error) {
+  //       console.error("Error fetching active WhatsApp:", error);
+  //       // Handle error, e.g., set a default value or display an error message
+  //       setActiveWhatsapp(null); // Or some default value
+  //     }
+  //   };
+
+  //   fetchActiveWhatsapp();
+  // }, []);
 
   // Function to format social media URLs with proper domains
   const formatSocialUrl = (platform, username) => {
@@ -142,20 +147,12 @@ const Navbar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const instagramUrl = activeSocial
-    ? formatSocialUrl("instagram", activeSocial.instagram)
-    : null;
-  const telegramUrl = activeSocial
-    ? formatSocialUrl("telegram", activeSocial.telegram)
-    : null;
-  const facebookUrl = activeSocial
-    ? formatSocialUrl("facebook", activeSocial.facebook)
-    : null;
-  const twitterUrl = activeSocial
-    ? formatSocialUrl("twitter", activeSocial.twitter)
-    : null;
-
-  const shareUrl = "https://betfair.ind.in"; // Change this to your actual URL
+  const instagramUrl = activeSocial ? formatSocialUrl("instagram", activeSocial.instagram) : null;
+  const telegramUrl = activeSocial ? formatSocialUrl("telegram", activeSocial.telegram) : null;
+  const facebookUrl = activeSocial ? formatSocialUrl("facebook", activeSocial.facebook) : null;
+  const twitterUrl = activeSocial ? formatSocialUrl("twitter", activeSocial.twitter) : null;
+  
+  const shareUrl = "https://lumbini.games"; // Change this to your actual URL
   const handleMenuClick = (item) => {
     if (item.name === "Profile") {
       // Navigate directly for "Profile"
@@ -559,13 +556,13 @@ const Navbar = () => {
                         { bgColor: "#1E1E1E" }
                       )
                     }
-                    className="py-1.5 px-2 max-[450px]:text-[10px] text-xs border border-black text-black bg-white rounded-lg transition duration-300 shadow-lg"
+                    className="py-1.5 px-2 max-[400px]:text-[8px] text-xs border border-gray-300 text-black bg-white rounded-lg transition duration-300 shadow-sm"
                   >
                     Login | Signup
                   </button>
                   <button
                     onClick={handleDemoLogin}
-                    className={`py-1.5 px-2 max-[450px]:text-[10px] text-xs border border-white
+                    className={`py-1.5 px-2 max-[400px]:text-[8px] text-xs border border-white
                       text-black
                     bg-[var(--color-primary)] rounded-lg transition duration-300 shadow-sm`}
                   >

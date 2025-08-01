@@ -14,7 +14,7 @@ const BannerCreate = () => {
         >
           <div className="flex items-center gap-2 py-1">
             <IoIosAddCircle className="text-black text-xl" />
-            <h3 className=" text-black text-sm"> Offers</h3>
+            <h3 className=" text-black text-sm"> Free Posters</h3>
           </div>
           <div>
             {" "}

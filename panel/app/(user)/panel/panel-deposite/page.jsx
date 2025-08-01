@@ -116,7 +116,7 @@ function PanelDepositeContent() {
               <img
                 src={panelData.panelDetails.logo}
                 alt="logo"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
@@ -126,6 +126,7 @@ function PanelDepositeContent() {
           </div>
           <div className="flex-1">
             <h1 className="text-white text-xs">
+              {" "}
               {panelData?.panelDetails?.name}
             </h1>
             <p className="text-gray-400 text-sm">
@@ -143,7 +144,7 @@ function PanelDepositeContent() {
           </div>
         </div>
         <div className="w-full h-0.5"></div>
-        {/* <div className="bg-[#171717] rounded-b-lg p-2 text-xs">
+        <div className="bg-[#171717] rounded-b-lg p-2 text-xs">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <IoIosEye className="text-gray-400 mr-2" />
@@ -151,7 +152,7 @@ function PanelDepositeContent() {
             </div>
             <span className="text-white">{panelData?.rate}</span>
           </div>
-        </div> */}
+        </div>
       </div>
 
       {/* Deposit Coins */}
@@ -164,16 +165,16 @@ function PanelDepositeContent() {
             onChange={handleAmountChange}
             className="w-full bg-transparent text-white text-sm  border-none outline-none"
           />
-          {/* <span className="float-right  text-white text-sm">
+          <span className="float-right  text-white text-sm">
             {panelData?.rate} × {amount} = ₹ {convertedAmount.toFixed(0)}
-          </span> */}
+          </span>
         </div>
       </div>
       <div className="flex justify-between items-center mt-1">
         <span className="text-gray-400 text-xs">{amountinText}</span>
       </div>
       {/* Action Buttons */}
-      <div className=" flex gap-2 p-4 ">
+      <div className="absolute bottom-0 left-0 right-0 flex gap-2 p-4 ">
         {/* <button
           onClick={handleAddToCart}
           className="flex-1 bg-yellow-500 text-xs text-black py-1 rounded-xl font-medium"

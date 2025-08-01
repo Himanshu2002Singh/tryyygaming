@@ -9,7 +9,6 @@ const BottomSheet = ({
   dragHandle = false,
   closeicon = true,
   fullscreen = false,
-  preventClose = false, // New prop to prevent closing
 }) => {
   const [isFullscreen, setIsFullscreen] = useState(fullscreen);
 
@@ -22,12 +21,6 @@ const BottomSheet = ({
     setIsFullscreen(!isFullscreen);
   };
 
-  const handleClose = () => {
-    if (!preventClose) {
-      onClose();
-    }
-  };
-
   return (
     <>
       {/* Background Overlay */}
@@ -35,7 +28,7 @@ const BottomSheet = ({
         className={`fixed inset-0 bg-black/90 z-[49] transition-opacity duration-300 ${
           isVisible ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
-        onClick={handleClose}
+        // onClick={onClose} // Close when clicking outside
       ></div>
 
       {/* Centered Bottom Sheet with dynamic sizing based on fullscreen state */}
@@ -59,12 +52,8 @@ const BottomSheet = ({
           <div className="absolute left-2 top-2 flex gap-2">
             {/* Close Button */}
             <div
-              className={`w-4 h-4 rounded-full text-[10px] text-black flex items-center justify-center ${
-                preventClose
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-red-500 cursor-pointer"
-              }`}
-              onClick={handleClose}
+              className="w-4 h-4 rounded-full bg-red-500 text-[10px] text-black flex items-center justify-center cursor-pointer"
+              onClick={onClose}
             >
               {/* × */}
             </div>

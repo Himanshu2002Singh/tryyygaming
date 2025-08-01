@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "betfair.ind.in",
-  description: "betfair.ind.in",
+  title: "Betfair Posters",
+  description: "Betfair Posters",
 };
 
 export default function RootLayout({ children }) {

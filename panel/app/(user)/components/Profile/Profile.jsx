@@ -24,11 +24,7 @@ export default function ProfilePage({}) {
     alternateNumber: "",
     username: "",
     password: "",
-    phone: "",
   });
-  const handlePhoneChange = (phone) => {
-    setFormData({ ...formData, phone });
-  };
 
   // Load user data when component mounts
   // Initial form data setup
@@ -43,7 +39,6 @@ export default function ProfilePage({}) {
           (user.alternateNumber ? String(user.alternateNumber) : ""),
         username: prevFormData.username || user.username || "",
         password: prevFormData.password || user.password || "",
-        phone: prevFormData.phone || user.phone || "",
       }));
     }
   }, [user]);
@@ -53,7 +48,6 @@ export default function ProfilePage({}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     try {
@@ -64,7 +58,6 @@ export default function ProfilePage({}) {
           name: formData.name,
           username: formData.username,
           password: formData.password,
-          phone: formData.phone,
         },
         {
           headers: {
@@ -241,90 +234,49 @@ export default function ProfilePage({}) {
     }
   };
   return (
-    <div className="text-white bg-[#1e1e1e] rounded-2xl overflow-hidden w-full max-w-md">
-      <div className="flex justify-center my-4">
-        <img className="w-2/6 h-auto object-cover" src="logo-gs.png" />
-      </div>
-      <div className="flex justify-center items-center px-3 pb-3">
-        <ToastContainer />
-        <div className="rounded-lg shadow-lg w-full">
-          <h2 className="text-2xl text-start">Profile</h2>
-          <form onSubmit={handleSubmit} className="space-y-3 mt-2 text-xs">
-            <div>
-              <label className="block">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="block bg-white w-full pl-2 py-3 border text-black border-gray-300 rounded-lg focus:ring-0"
-                required
-              />
-            </div>
-            <div>
-              <label className="block">Username</label>
-              <input
-                type="text"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                className="block bg-white w-full pl-2 py-3 border text-black border-gray-300 rounded-lg focus:ring-0"
-                required
-              />
-            </div>{" "}
-            {!user.phone && (
-              <div>
-                <label className="block">Phone Number</label>
-                <div className="relative w-full max-w-md">
-                  <PhoneInput
-                    country={"in"}
-                    value={formData.phone}
-                    onChange={handlePhoneChange}
-                    inputProps={{
-                      name: "phone",
-                      required: true,
-                      autoComplete: "off",
-                      className:
-                        "block bg-white w-full py-3 border text-black border-gray-300 rounded-lg focus:outline-none",
-                    }}
-                    disableFormatting={true}
-                    containerClass="flex items-center rounded-lg bg-transparent"
-                    buttonClass="border-r rounded-lg bg-transparent"
-                    dropdownClass="bg-white text-black absolute z-10 max-h-60 overflow-y-auto"
-                    enableSearch={true}
-                    countryCodeEditable={false}
-                    inputStyle={{
-                      paddingLeft: "45px",
-                      width: "100%",
-                      height: "48px",
-                      borderLeft: "none", // Remove left border of input
-                    }}
-                  />
-                </div>
-                {/* <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="block bg-white w-full pl-2 py-3 border text-black border-gray-300 rounded-lg focus:ring-0"
-                required
-              /> */}
-              </div>
-            )}
-            <div>
-              <label className="block">Password</label>
+    <div className="flex justify-center items-center px-3 pb-3">
+      <ToastContainer />
+      <div className="rounded-lg shadow-lg w-full">
+        <h2 className="text-2xl text-start">Profile</h2>
+        <form onSubmit={handleSubmit} className="space-y-3 mt-2 text-xs">
+          <div>
+            <label className="block">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="block bg-white w-full pl-2 py-3 border text-black border-gray-300 rounded-lg focus:ring-0"
+              required
+            />
+          </div>
 
-              <input
-                type="text"
-                name="password"
-                className=" block bg-white text-xs w-full pl-2 pr-3 py-3  text-black  rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                // placeholder="your password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            {/* <div>
+          <div>
+            <label className="block">Username</label>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              className="block bg-white w-full pl-2 py-3 border text-black border-gray-300 rounded-lg focus:ring-0"
+              required
+            />
+          </div>
+          <div>
+            <label className="block">Password</label>
+
+            <input
+              type="text"
+              name="password"
+              className=" block bg-white text-xs w-full pl-2 pr-3 py-3  text-black  rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              // placeholder="your password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div>
             <label className="block">Email</label>
             <div className="flex items-center gap-2">
               <div className="w-9/12">
@@ -336,7 +288,19 @@ export default function ProfilePage({}) {
                   onChange={handleChange}
                   className="block w-full bg-white pl-2 py-3 border text-black border-gray-300 rounded-lg focus:ring-0"
                 />
-               
+                {/* {user?.emailVerified ? (
+                <span className="text-green-500 text-xs whitespace-nowrap">
+                  ✓ Verified
+                </span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={sendEmailOtp}
+                  className="bg-[var(--color-primary)] w-3/12 text-black px-2 py-3 rounded text-xs whitespace-nowrap"
+                >
+                  Verify
+                </button>
+              )} */}
               </div>
               {user?.emailverified ? (
                 <span className="text-green-500 text-xs whitespace-nowrap">
@@ -383,11 +347,13 @@ export default function ProfilePage({}) {
                 </p>
               </div>
             )}
-          </div> */}
-            {/* <div>
+          </div>
+
+          <div>
             <label className="block">Alternate Phone</label>
             <div className="flex items-center gap-2">
               <div className="w-9/12">
+                {/* Ensure value is a string and provide a default empty string */}
                 <PhoneInput
                   country={"in"}
                   value={formData.alternateNumber || ""}
@@ -459,15 +425,15 @@ export default function ProfilePage({}) {
                 </p>
               </div>
             )}
-          </div> */}
-            <button
-              type="submit"
-              className="mt-5 w-full bg-[var(--color-primary)] gap-1 hover:cursor-pointer text-black font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center"
-            >
-              {loading ? "Saving..." : "Save Profile"}
-            </button>
-          </form>
-        </div>
+          </div>
+
+          <button
+            type="submit"
+            className="mt-5 w-full bg-[var(--color-primary)] gap-1 hover:cursor-pointer text-black font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center"
+          >
+            {loading ? "Saving..." : "Save Profile"}
+          </button>
+        </form>
       </div>
     </div>
   );

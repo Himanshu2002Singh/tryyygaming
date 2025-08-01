@@ -122,7 +122,7 @@ const CoinRequestsPage = () => {
 
   return (
     <>
-      <div className="p-6 bg-[#D9D9D9] text-black">
+      <div className="p-6 ">
         <h1 className="text-2xl font-bold mb-6">
           {isSuperAdmin ? "All Coin Requests" : "My Coin Requests"}
         </h1>
@@ -132,16 +132,16 @@ const CoinRequestsPage = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
           </div>
         ) : coinRequests.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-6 text-center">
-            <p className="text-black">No coin requests found</p>
+          <div className="bg-black rounded-lg shadow p-6 text-center">
+            <p className="text-gray-500">No coin requests found</p>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <table className="min-w-full bg-white rounded-lg overflow-hidden border border-gray-600 shadow-2xl">
+          <div className="bg-black rounded-lg shadow overflow-hidden">
+            <table className="min-w-full bg-[var(--color-secondary)] rounded-lg overflow-hidden border border-gray-600">
               <thead className="bg-[var(--color-primary)] text-black text-sm border-b border-gray-600">
                 <tr>
                   <th className="px-4 sm:py-3 text-left border-r border-gray-600 last:border-r-0">
-                    ID
+                    S.No
                   </th>
                   {isSuperAdmin && (
                     <th className="px-4 sm:py-3 text-left border-r border-gray-600 last:border-r-0">
@@ -168,35 +168,40 @@ const CoinRequestsPage = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {coinRequests.map((request) => (
-                  <tr key={request.id}>
-                    <td className="px-4 sm:py-3 text-white border-r border-gray-700">
-                      {request.id.substring(0, 8)}...
-                    </td>
+                {coinRequests.map((request,index) => (
+                      <tr
+                        key={request.id}
+                        className={`${
+                          index % 2 === 0 ? "bg-white" : "bg-[#E7E7E7]"
+                        }  text-black`}
+                      >
+                        <td className="py-4 px-6 text-sm text-black border border-gray">
+                          {index + 1}
+                        </td>
                     {isSuperAdmin && (
-                      <td className="px-4 sm:py-3 text-white border-r border-gray-700">
+                      <td className="px-4 sm:py-3 text-black border border-gray-700">
                         <div className="text-sm font-medium text-gray-900">
                           {request.requestingAdmin?.name}
                         </div>
-                        <div className="text-sm text-white">
+                        <div className="text-sm text-gray-400">
                           {request.requestingAdmin?.email}
                         </div>
                       </td>
                     )}
-                    <td className="px-4 sm:py-3 text-white border-r border-gray-700">
+                    <td className="px-4 sm:py-3 text-black border border-gray-700">
                       {request.amount}
                     </td>
-                    <td className="px-4 sm:py-3 text-white border-r border-gray-700">
+                    <td className="px-4 sm:py-3 text-black border border-gray-700">
                       {request.reason || "-"}
                     </td>
-                    <td className="px-4 sm:py-3 text-white border-r border-gray-700">
+                    <td className="px-4 sm:py-3 text-black border border-gray-700">
                       {getStatusBadge(request.status)}
                     </td>
-                    <td className="px-4 sm:py-3 text-white border-r border-gray-700">
+                    <td className="px-4 sm:py-3 text-black border border-gray-700">
                       {formatDate(request.createdAt)}
                     </td>
                     {isSuperAdmin && (
-                      <td className="px-4 sm:py-3 text-white border-r border-gray-700">
+                      <td className="px-4 sm:py-3 text-black border border-gray-700">
                         {request.status === "pending" && (
                           <>
                             <button
@@ -228,7 +233,7 @@ const CoinRequestsPage = () => {
 
       {/* Reject Modal */}
       {showRejectModal && (
-        <div className="fixed inset-0 bg-[#D9D9D9] text-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <h3 className="text-lg font-bold mb-4">Reject Coin Request</h3>
             <div className="mb-4">
@@ -251,7 +256,7 @@ const CoinRequestsPage = () => {
                 Cancel
               </button>
               <button
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                className="bg-red-500 hover:bg-red-600 text-black font-bold py-2 px-4 rounded"
                 onClick={handleReject}
               >
                 Reject

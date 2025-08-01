@@ -10,7 +10,6 @@ export const BottomSheetProvider = ({ children }) => {
   const [bgColor, setBgColor] = useState("#1e1e1e");
   const [closeicon, setCloseIcon] = useState(true);
   const [fullscreen, setFullscreen] = useState(false);
-  const [preventClose, setPreventClose] = useState(false); // New state
 
   const openBottomSheet = (Component, options = {}) => {
     console.log("openBottomSheet called with component:", Component);
@@ -18,8 +17,7 @@ export const BottomSheetProvider = ({ children }) => {
     setBgColor(options.bgColor || "#1e1e1e");
     setCloseIcon(options.closeicon !== undefined ? options.closeicon : true);
     setIsVisible(true);
-    setFullscreen(options.fullscreen || false);
-    setPreventClose(options.preventClose || false); // New option
+    setFullscreen(options.fullscreen || false); // NEW LINE
 
     return Promise.resolve();
   };
@@ -27,7 +25,6 @@ export const BottomSheetProvider = ({ children }) => {
   const closeBottomSheet = () => {
     setIsVisible(false);
     setComponentToRender(null);
-    setPreventClose(false); // Reset prevent close
   };
 
   return (
@@ -39,8 +36,7 @@ export const BottomSheetProvider = ({ children }) => {
         Component={ComponentToRender}
         bgColor={bgColor}
         closeicon={closeicon}
-        fullscreen={fullscreen}
-        preventClose={preventClose} // New prop
+        fullscreen={fullscreen} // NEW PROP
       />
     </BottomSheetContext.Provider>
   );

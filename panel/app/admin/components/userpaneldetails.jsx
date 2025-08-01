@@ -136,13 +136,13 @@ const PurchasesUserModal = ({
   return (
     <div className="w-full pb-3 overflow-hidden bg-[#D9D9D9] text-black rounded-lg shadow-2xl">
       <div className="bg-black w-full rounded-t-lg text-white text-center p-3 text-sm">
-        ID Purchases for {user?.username}
+        Panel Purchases for {user?.username}
       </div>
       <div className="p-4 w-full">
         <div className="mb-4">
           <input
             type="text"
-            placeholder="Search IDs..."
+            placeholder="Search Panels..."
             className="p-2 border rounded w-full bg-gray border-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-black-500 focus:border-transparent"
             value={purchaseSearchTerm}
             onChange={(e) => setPurchaseSearchTerm(e.target.value)}
@@ -152,7 +152,7 @@ const PurchasesUserModal = ({
           <table className="min-w-full divide-y divide-gray-700 mt-4">
             <thead>
               <tr>
-                <th className="px-4 py-2 text-left">ID name</th>
+                <th className="px-4 py-2 text-left">Panel name</th>
                 <th className="px-4 py-2 text-left">Username</th>
                 <th className="px-4 py-2 text-left">Coins</th>
                 {/* <th className="px-4 py-2 text-left">Rate</th> */}

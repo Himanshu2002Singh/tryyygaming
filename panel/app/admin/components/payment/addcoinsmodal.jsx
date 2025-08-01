@@ -59,15 +59,15 @@ const AddCoinsModal = ({ isOpen, onClose, adminId, onSuccess }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="w-full pb-3 overflow-hidden bg-[#D9D9D9] text-black rounded-lg shadow-lg">
-      <div className="bg-black rounded-t-lg text-black text-center p-3 text-sm">
+    <div className="w-full pb-3 overflow-hidden bg-[#393939]">
+      <div className="bg-[#171717] rounded-t-lg text-white text-center p-3 text-sm">
         Request Coins
       </div>
 
       <form onSubmit={handleSubmit} className="p-4">
         <div className="mb-4">
           <label
-            className="block text-black text-sm font-bold mb-2"
+            className="block text-white text-sm font-bold mb-2"
             htmlFor="amount"
           >
             Amount
@@ -75,7 +75,7 @@ const AddCoinsModal = ({ isOpen, onClose, adminId, onSuccess }) => {
           <input
             id="amount"
             type="number"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Enter amount"
@@ -85,14 +85,14 @@ const AddCoinsModal = ({ isOpen, onClose, adminId, onSuccess }) => {
 
         <div className="mb-6">
           <label
-            className="block text-black text-sm font-bold mb-2"
+            className="block text-white text-sm font-bold mb-2"
             htmlFor="reason"
           >
             Reason (Optional)
           </label>
           <textarea
             id="reason"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             placeholder="Why do you need these coins?"
@@ -110,7 +110,7 @@ const AddCoinsModal = ({ isOpen, onClose, adminId, onSuccess }) => {
           </button>
           <button
             type="submit"
-            className="bg-emerald-500 text-sm hover:bg-emerald-600 text-black font-bold py-2 px-4 rounded"
+            className="bg-emerald-500 text-sm hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded"
             disabled={isLoading}
           >
             {isLoading ? "Submitting..." : "Submit Request"}

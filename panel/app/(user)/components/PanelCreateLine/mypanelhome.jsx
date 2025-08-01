@@ -100,7 +100,7 @@ const MyPanelHome = () => {
               <div className="flex justify-between items-center bg-[var(--color-primary)] mb-1 p-2 rounded-2xl">
                 <div className="flex items-center gap-2 py-1">
                   <IoIosAddCircle className="text-black text-xl" />
-                  <h3 className="text-black text-sm">Create ID</h3>
+                  <h3 className="text-black text-sm">Create Panel</h3>
                 </div>
                 <div>
                   <FaArrowRight className="text-black text-xl" />
@@ -115,7 +115,7 @@ const MyPanelHome = () => {
         <div className="px-2 md:px-4 my-4">
           <div className="flex justify-between items-center mb-3">
             <h3 className="text-white text-sm md:text-base font-semibold">
-              My IDs
+              My Panels
             </h3>
             <div className="flex items-center gap-4 justify-between">
               <Link
@@ -123,7 +123,7 @@ const MyPanelHome = () => {
                 className="text-[var(--color-primary)] flex items-center gap-1"
               >
                 <BsPlusCircle />
-                <h3 className=" text-xs md:text-sm">Create IDs</h3>
+                <h3 className=" text-xs md:text-sm">Create Panel</h3>
               </Link>
               <Link href="/paneldashboard">
                 <h3 className="text-white text-xs md:text-sm">View all</h3>
@@ -151,7 +151,7 @@ const MyPanelHome = () => {
                           <img
                             src={panel.panelDetails.logo}
                             alt={panel.panelDetails?.name}
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-cover"
                           />
                         ) : (
                           <div className="font-bold text-xs text-center text-white">
@@ -192,14 +192,14 @@ const MyPanelHome = () => {
                   </div>
 
                   {/* Third row: Password with lock icon */}
-                  <div className="flex items-center mb-1 p-1 md:px-2 rounded">
+                  {/* <div className="flex items-center mb-1 p-1 md:px-2 rounded">
                     <IoMdLock className="text-gray-400 mr-2" size={14} />
                     <div className="text-white">
                       <div className="font-medium text-xs md:text-sm">
                         {panel.password}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <Link href={`/panel/panel-transactions?panelId=${panel?.id}`}>
                     <div className="border border-gray-400 text-center text-xs rounded-lg px-2 py-1 my-1 font-semibold">
                       View Transactions

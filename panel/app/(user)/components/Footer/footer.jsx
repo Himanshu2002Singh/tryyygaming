@@ -3,72 +3,16 @@ import { FaHome } from "react-icons/fa";
 import { MdOutlineCasino, MdSportsCricket, MdFileOpen } from "react-icons/md";
 import { BsCart, BsWhatsapp } from "react-icons/bs";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-const { router } = require("next/navigation");
+import { useContext, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AuthContext } from "../../context/authprovider";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import Image from "next/image";
-import { PiAddressBook } from "react-icons/pi";
-import LoginAlert from "../notloggedalert";
-import { useBottomSheet } from "../../context/BottomSheet";
-import axios from "axios";
-import API_URL from "@/config";
 
 const BottomNavBar = () => {
-  const router = useRouter();
-  const { openBottomSheet } = useBottomSheet();
   const { user } = useContext(AuthContext);
   const pathname = usePathname();
   const [hoveredItem, setHoveredItem] = useState(null);
-  const [activewhatsapp, setActiveWhatsapp] = useState();
-  useEffect(() => {
-    fetchActiveWhatsapp();
-  }, []);
-  const fetchActiveWhatsapp = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/admin/active-whatsapp`);
-      setActiveWhatsapp(response.data.whatsapp);
-    } catch (error) {
-      console.error("Error fetching active WhatsApp:", error);
-      // Handle error, e.g., set a default value or display an error message
-      setActiveWhatsapp(null); // Or some default value
-    }
-  };
-
-  const renderNavIcon = (item) => (
-    <div
-      className={`flex items-center transition-all duration-300 rounded-full ${
-        isSelected(item.navigateto)
-          ? "bg-[var(--color-primary)] shadow-md px-3 py-2"
-          : hoveredItem === item.id
-          ? "opacity-80"
-          : "opacity-60 p-2"
-      }`}
-    >
-      <div
-        className={`flex justify-center items-center ${
-          isSelected(item.navigateto) ? "text-black" : "text-gray-500"
-        }`}
-      >
-        {item.useCustomImage ? (
-          item.icon()
-        ) : (
-          <>
-            <div className="block sm:hidden">{item.icon(iconSizes.mobile)}</div>
-            <div className="hidden sm:block">
-              {item.icon(iconSizes.default)}
-            </div>
-          </>
-        )}
-      </div>
-      {isSelected(item.navigateto) && (
-        <span className="ml-2 text-sm font-medium text-black">
-          {item.label}
-        </span>
-      )}
-    </div>
-  );
 
   // Define responsive icon sizes
   const getIconSize = () => {
@@ -85,32 +29,32 @@ const BottomNavBar = () => {
       navigateto: "/",
       useCustomImage: false,
     },
-    // {
-    //   id: "sports",
-    //   label: "Sports",
-    //   icon: (size) => <MdSportsCricket size={size} />,
-    //   navigateto: "/sports",
-    //   useCustomImage: false,
-    // },
-    // {
-    //   id: "Casino",
-    //   label: "Casino",
-    //   icon: (size) => (
-    //     <div className="relative w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]">
-    //       <Image
-    //         src="/casino_icon.png"
-    //         alt="Casino"
-    //         fill
-    //         className="object-contain"
-    //       />
-    //     </div>
-    //   ),
-    //   navigateto: "/comingsoon",
-    //   useCustomImage: true,
-    // },
+    {
+      id: "sports",
+      label: "Sports",
+      icon: (size) => <MdSportsCricket size={size} />,
+      navigateto: "/sports",
+      useCustomImage: false,
+    },
+    {
+      id: "Casino",
+      label: "Casino",
+      icon: (size) => (
+        <div className="relative w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]">
+          <Image
+            src="/casino_icon.png"
+            alt="Casino"
+            fill
+            className="object-contain"
+          />
+        </div>
+      ),
+      navigateto: "/comingsoon",
+      useCustomImage: true,
+    },
     {
       id: "Panels",
-      label: "IDs",
+      label: "Panels",
       icon: (size) => (
         <div className="relative w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]">
           <Image
@@ -125,20 +69,10 @@ const BottomNavBar = () => {
       useCustomImage: true,
     },
     {
-      id: "passpook",
-      label: "PassBook",
-      icon: (size) => <PiAddressBook size={28} />,
-
-      navigateto: "/transactions",
-      useCustomImage: true,
-    },
-    {
       id: "Whatsapp",
       label: "Help",
       icon: (size) => <RiCustomerService2Fill size={size} />,
-      // navigateto: "/helpsupport",
-      navigateto: `https://wa.me/${activewhatsapp}`, // Replace with your phone number, including the country code
-
+      navigateto: "/helpsupport",
       useCustomImage: false,
     },
   ];
@@ -162,45 +96,53 @@ const BottomNavBar = () => {
         {/* Functional container for navigation (NOT clipped) */}
         <div className="relative w-full md:w-[50%] flex justify-center items-end overflow-visible z-10">
           <div className="flex bg-[#111111] justify-around items-center w-full px-2 py-2">
-            {navItems.map((item) => {
-              const handleClick = (e) => {
-                if (item.label === "PassBook") {
-                  e.preventDefault();
-                  if (!user) {
-                    openBottomSheet(LoginAlert, { closeicon: false });
-                  } else {
-                    router.push(item.navigateto);
-                  }
-                }
-              };
-
-              const isPassBook = item.label === "PassBook";
-              return (
+            {navItems.map((item) => (
+              <Link key={item.id} href={item.navigateto} className="flex-1">
                 <div
-                  key={item.id}
-                  onClick={isPassBook ? handleClick : undefined}
-                  className="flex-1 cursor-pointer"
+                  className="flex items-center justify-center"
+                  onMouseEnter={() => setHoveredItem(item.id)}
+                  onMouseLeave={() => setHoveredItem(null)}
                 >
-                  {!isPassBook ? (
-                    <Link
-                      href={item.navigateto}
-                      className="flex items-center justify-center"
-                    >
-                      {/* common icon UI */}
-                      {renderNavIcon(item)}
-                    </Link>
-                  ) : (
+                  <div
+                    className={`flex items-center transition-all duration-300 rounded-full ${
+                      isSelected(item.navigateto)
+                        ? "bg-[var(--color-primary)] shadow-md px-3 py-2"
+                        : hoveredItem === item.id
+                        ? "opacity-80"
+                        : "opacity-60 p-2"
+                    }`}
+                  >
                     <div
-                      className="flex items-center justify-center"
-                      onMouseEnter={() => setHoveredItem(item.id)}
-                      onMouseLeave={() => setHoveredItem(null)}
+                      className={`flex justify-center items-center ${
+                        isSelected(item.navigateto)
+                          ? "text-black"
+                          : "text-gray-500"
+                      }`}
                     >
-                      {renderNavIcon(item)}
+                      {item.useCustomImage ? (
+                        item.icon()
+                      ) : (
+                        <>
+                          <div className="block sm:hidden">
+                            {item.icon(iconSizes.mobile)}
+                          </div>
+                          <div className="hidden sm:block">
+                            {item.icon(iconSizes.default)}
+                          </div>
+                        </>
+                      )}
                     </div>
-                  )}
+
+                    {/* Only show label for selected item */}
+                    {isSelected(item.navigateto) && (
+                      <span className="ml-2 text-sm font-medium text-black">
+                        {item.label}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              );
-            })}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

@@ -38,8 +38,8 @@ export default function AdminPaymentLayout({ children }) {
           />
         )}
 
-        <main className="flex-1 overflow-y-auto bg-[#D9D9D9] text-black">{children}</main>
-      </div>
+<main className="flex-1 overflow-y-auto bg-[#D9D9D9] text-black">{children}</main>
+</div>
     </div>
   );
 }

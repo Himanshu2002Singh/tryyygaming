@@ -19,14 +19,7 @@ const BankAccountsContent = () => {
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [selectedBankId, setSelectedBankId] = useState(null);
-  const [bankslist, setbankslist] = useState(
-    Object.entries(bankdata)
-      .sort(([bankA], [bankB]) => bankA.localeCompare(bankB))
-      .reduce((acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
-      }, {})
-  ); // State to store JSON data
+  const [bankslist, setbankslist] = useState(bankdata); // State to store JSON data
 
   const handleCloseForm = () => {
     setShowSideForm(false);
@@ -168,9 +161,6 @@ const BankAccountsContent = () => {
         // Create new bank
         response = await fetch(`${API_URL}/admin/create-bank`, {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("admintoken")}`,
-          },
           body: formDataToSend,
         });
       }
@@ -286,9 +276,9 @@ const BankAccountsContent = () => {
     }
 
     // Status filter - assuming we'll add a status field later
-    if (filter === "Active" && bank.status !== "Active") {
+    if (filter === "Active" && !bank.isActive) {
       return false;
-    } else if (filter === "Inactive" && bank.status != "Inactive") {
+    } else if (filter === "Inactive" && bank.isActive) {
       return false;
     }
 
@@ -678,7 +668,7 @@ const BankAccountsContent = () => {
                       >
                         <option value="Saving">Saving</option>
                         <option value="Current">Current</option>
-                        <option value="Fixed">Fixed Deposit</option>
+                        {/* <option value="Fixed">Fixed Deposit</option> */}
                       </select>
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <IoChevronDownOutline className="h-5 w-5 text-gray-400" />

@@ -9,7 +9,6 @@ import Link from "next/link";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import BannerCreate from "./components/banner/banner";
-import Infocomponent from "./components/infocomponent";
 
 export default function Home() {
   return (
@@ -21,13 +20,12 @@ export default function Home() {
         <div className="flex-grow">
           {/* panel create  */}
           <MyPanleHome />
-          {/* <BannerCreate /> */}
-          <Infocomponent />
+
           {/* Panel Purchases Grid */}
 
           <SportsBettingInterface />
         </div>
-        {/* <GameGrid /> */}
+        <GameGrid />
       </div>
     </div>
   );

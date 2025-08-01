@@ -73,22 +73,15 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black to-gray-600 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-black to-[#555555] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Card */}
         <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
           {/* Header */}
           <div className="py-8 px-6 bg-gradient-to-r from-[#555555] to-black text-center">
-            <img
-              src="/logo-gs.png"
-              format="png"
-              alt="Logo"
-              className="w-44 mx-auto mb-4"
-            />
-            <h2 className="text-3xl font-bold text-white">
-              betfair Admin Panel
-            </h2>
-            <p className="text-blue-100 mt-2">Please sign in to continue</p>
+            <img src="/logo-gs.png" alt="Logo" className="w-1/2 mx-auto mb-4" />
+            {/* <h2 className="text-3xl font-bold text-white">Admin Portal</h2>
+            <p className="text-blue-100 mt-2">Please sign in to continue</p> */}
           </div>
 
           {/* Login Form */}
@@ -240,9 +233,8 @@ const AdminLoginPage = () => {
               <p className="text-sm text-gray-600">
                 Need help?{" "}
                 <a
-                  href="https://wa.me/919876543210"
                   target="_blank"
-                  rel="noopener noreferrer"
+                  href="https://wa.me/+447861660477"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   Contact Support
@@ -255,14 +247,7 @@ const AdminLoginPage = () => {
         {/* Bottom Text */}
         <div className="mt-6 text-center">
           <p className="text-sm text-indigo-100">
-            © 2025 betfair All rights reserved.
-          </p>
-          <p>
-            Powered By{" "}
-            <strong className="text-[var(--color-primary)]">
-              {" "}
-              betfair{" "}
-            </strong>
+            © 2025 Betfair. All rights reserved.
           </p>
         </div>
       </div>

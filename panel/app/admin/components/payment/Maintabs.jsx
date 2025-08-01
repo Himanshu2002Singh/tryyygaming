@@ -4,9 +4,9 @@ import TabItem from "./TabItems";
 const allTabs = [
   { key: "wallet", title: "Deposit Request" },
   { key: "withdraw", title: "Withdraw Request" },
-  { key: "siterequest", title: "ID request" },
-  { key: "sitedeposite", title: "ID Deposit" },
-  { key: "sitewithdraw", title: "ID Withdraw" },
+  { key: "siterequest", title: "Site request" },
+  { key: "sitedeposite", title: "Site Deposite" },
+  { key: "sitewithdraw", title: "Site Withdraw Request" },
   // If you want to add others later like monitoring, suspicious etc.
 ];
 
@@ -16,7 +16,7 @@ function MainTabs({ activeTab, onTabChange, tabsToShow }) {
     : allTabs;
 
   return (
-    <div className="flex border-b ">
+    <div className="flex border-b">
       {tabs.map((tab) => (
         <TabItem
           key={tab.key}

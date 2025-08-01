@@ -6,7 +6,6 @@ import { AuthContext } from "../../context/authprovider";
 import { Loader } from "../../utils/loader";
 import { BsCopy } from "react-icons/bs";
 import MessageAlert from "../alert";
-import { getUpiLogo } from "@/app/logoupi";
 
 const Deposit = ({ amount }) => {
   const { closeBottomSheet, openBottomSheet } = useContext(BottomSheetContext);
@@ -67,10 +66,10 @@ const Deposit = ({ amount }) => {
 
   const handleSubmitAmount = (e) => {
     e.preventDefault();
-    if (parseFloat(depositAmount) >= 100) {
+    if (parseFloat(depositAmount) >= 1000) {
       setCurrentStep(2);
     } else {
-      alert("Minimum deposit amount is 100 coins");
+      alert("Minimum deposit amount is 1000 coins");
     }
   };
 
@@ -176,7 +175,7 @@ const Deposit = ({ amount }) => {
             />
 
             <div className="text-xs text-white mb-3">
-              Minimum deposit amount is 100 coins
+              Minimum deposit amount is 1000 coins
             </div>
 
             <button
@@ -270,29 +269,7 @@ const Deposit = ({ amount }) => {
                               {option.depositAmountRange}
                             </div>
                           </div>
-                          <div className="flex items-center">
-                            {getUpiLogo(option?.bankName) ? (
-                              <img
-                                src={getUpiLogo(option?.bankName)}
-                                alt={option?.bankName}
-                                className="h-5"
-                                onError={(e) => {
-                                  e.target.style.display = "none";
-                                  e.target.nextSibling.style.display = "inline";
-                                }}
-                              />
-                            ) : null}
-                            <span
-                              className="text-xl"
-                              style={{
-                                display: getUpiLogo(option?.bankName)
-                                  ? "none"
-                                  : "inline",
-                              }}
-                            >
-                              📱
-                            </span>
-                          </div>
+                          <span className="text-xl">📱</span>
                         </div>
                       ))}
                   </div>

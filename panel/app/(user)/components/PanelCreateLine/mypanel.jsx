@@ -92,12 +92,8 @@ const MyPanelsContent = () => {
 
     const filtered = myPanels.filter(
       (panel) =>
-        panel.panelDetails?.name
-          ?.toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
-        panel.panelDetails?.website
-          ?.toLowerCase()
-          .includes(searchTerm.toLowerCase())
+        panel.panel?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        panel.panel?.website?.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredPanels(filtered);
   };
@@ -118,7 +114,7 @@ const MyPanelsContent = () => {
             <FaSearch className="absolute left-3 text-gray-400" size={20} />
             <input
               type="text"
-              placeholder="Search my IDs..."
+              placeholder="Search my panels..."
               className="bg-[#171717] text-white pl-10 pr-2 py-2 rounded-md outline-none w-full"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -137,9 +133,10 @@ const MyPanelsContent = () => {
           filteredPanels
             .filter((purchase) => purchase.status === "completed")
             .map((purchase, index) => (
+              // filteredPanels.map((purchase) => (
               <div
                 key={index}
-                className="flex items-center justify-between bg-[var(--color-secondary)] rounded-lg px-2 mb-2"
+                className="flex items-center justify-between bg-[var(--color-secondary)] rounded-lg p-2 "
               >
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center overflow-hidden">
@@ -147,7 +144,7 @@ const MyPanelsContent = () => {
                       <img
                         src={purchase.panelDetails.logo}
                         alt={purchase.loginurl}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                       />
                     ) : (
                       <div className="font-bold text-xs text-center">
@@ -156,18 +153,41 @@ const MyPanelsContent = () => {
                     )}
                   </div>
                   <div className="ml-4">
-                    <div className="text-xs">
+                    <div className="text-[10px]">
                       {purchase?.loginurl || "Panel"}
                     </div>
                     <div className="flex text-[10px] items-center ">
                       {purchase.username || "N/A"}
+                      {/* <FaRegCopy
+                      size={14}
+                      className="ml-1 cursor-pointer"
+                      onClick={() => copyToClipboard(purchase.Panel?.website)}
+                    /> */}
                     </div>
+                    <div className="text-[10px]">Rate @ {purchase?.rate}</div>
+                    <div className="my-1 text-[10px]">
+                      Sharing - {purchase?.accountType}
+                    </div>
+                    {/* <div className="text-xs">
+                    <span
+                      className={`${
+                        purchase.status === "ACTIVE"
+                          ? "text-green-500"
+                          : purchase.status === "PENDING"
+                          ? "text-yellow-500"
+                          : "text-red-500"
+                      }`}
+                    >
+                      Status: {purchase.status}
+                    </span>
+                  </div> */}
                   </div>
                 </div>
                 <div
                   className="relative w-max font-sans p-4"
                   ref={(el) => (menuRefs.current[purchase.id] = el)}
                 >
+                  {" "}
                   <div className="flex items-center space-x-5">
                     <button
                       onClick={() => handledepositeclick(purchase)}
@@ -200,7 +220,6 @@ const MyPanelsContent = () => {
                       </button>
                     </div>
                   </div>
-
                   {openMenuId === purchase.id && (
                     <div className="absolute rounded-2xl right-0 w-max bg-black text-gray-300 z-10">
                       <ul className="py-1 text-sm">
@@ -233,13 +252,16 @@ const MyPanelsContent = () => {
                               ? purchase.loginurl
                               : `https://${purchase?.loginurl}`
                           }
-                          target="_blank"
                           rel="noopener noreferrer"
+                          target="_blank"
                         >
-                          <li className="px-4 py-2 cursor-pointer hover:font-bold">
+                          <li className="px-4 py-2  cursor-pointer">
                             Change Password
                           </li>
                         </a>
+                        {/* <li className="px-4 py-2 hover:bg-gray-950 cursor-pointer">
+                          Close Panel
+                        </li> */}
                       </ul>
                     </div>
                   )}
@@ -249,13 +271,13 @@ const MyPanelsContent = () => {
         ) : (
           <div className="flex flex-col justify-center items-center h-40">
             <p className="text-gray-400 mb-4">
-              You haven't purchased any IDs yet
+              You haven't purchased any panels yet
             </p>
             <button
-              onClick={() => router.push("/panel/browse")} // Make sure this path is correct
+              onClick={() => setActiveTab("CREATE PANEL")}
               className="bg-[var(--color-primary)] hover:bg-yellow-600 text-black text-xs py-2 px-6 rounded-xl"
             >
-              Browse IDs
+              Browse Panels
             </button>
           </div>
         )}

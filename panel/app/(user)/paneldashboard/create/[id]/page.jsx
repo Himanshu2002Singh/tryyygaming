@@ -256,7 +256,6 @@ const CreateWebPanel = () => {
         );
 
         await fetchUserDetails();
-        router.push("/");
         // toast.success(response.data.message);
         //
       }
@@ -413,10 +412,10 @@ const CreateWebPanel = () => {
               required
               onChange={(e) => setUsername(e.target.value)}
             />
-            {/* <div className="my-4 mb-2 text-xs">
+            <div className="my-4 mb-2 text-xs">
               Rate Type <span className="text-red-500">*</span>
-            </div> */}
-            {/* <div className="flex text-sm p-2 rounded-full w-fit space-x-2">
+            </div>
+            <div className="flex text-sm p-2 rounded-full w-fit space-x-2">
               {["sharing", "purchase"].map((option) => (
                 <button
                   type="button"
@@ -459,8 +458,8 @@ const CreateWebPanel = () => {
             </div>
             <div className="my-2 text-xs font-bold">
               Account Type <span className="text-red-500">*</span>
-            </div> */}
-            {/* <div className="relative">
+            </div>
+            <div className="relative">
               <select
                 className="rounded-xl w-full bg-[#111111] text-sm px-3 py-2 text-white appearance-none focus:outline-none"
                 value={accountType}
@@ -469,7 +468,8 @@ const CreateWebPanel = () => {
               >
                 <option value={panel?.accounttype}>{panel?.accounttype}</option>
 
-               
+                {/* <option value="Admin">Admin (master)</option>
+              <option value="User">User</option> */}
               </select>
               <div className="absolute right-3 top-3">
                 <svg
@@ -487,11 +487,11 @@ const CreateWebPanel = () => {
                   />
                 </svg>
               </div>
-            </div> */}
+            </div>
           </div>
 
           {/* Deposit Coins Section */}
-          {/* <div className="bg-[#1E1E1E] rounded-xl p-4 mb-4">
+          <div className="bg-[#1E1E1E] rounded-xl p-4 mb-4">
             <div className="text-base mb-4">Deposit Coins</div>
 
             <div className="flex mb-3">
@@ -526,8 +526,62 @@ const CreateWebPanel = () => {
                   Only INR is available
                 </div>
               </div>
+
+              <div className="w-1/2 pl-2">
+                <div className="mb-2 text-xs font-bold">Enter Coins</div>
+                <input
+                  type="number"
+                  className="w-full text-sm  bg-[#111111] rounded-xl px-3 py-2 text-gray-300 border-none focus:outline-none"
+                  value={coins}
+                  onChange={handleCoinsChange}
+                  min="1000"
+                />
+                <div className="text-gray-400 mt-1 text-xs">
+                  {coins.toLocaleString()} coins
+                </div>
+              </div>
             </div>
 
+            {/* Rate Input - Only editable in sharing mode */}
+            <div className="my-4">
+              <div className="mb-2 text-xs font-bold">
+                Rate <span className="text-red-500">*</span>
+              </div>
+              <input
+                type="number"
+                step="0.01"
+                className={`w-full bg-[#111111] text-sm rounded-xl px-3 py-2 text-white border-none focus:outline-none ${
+                  rateType === "purchase" ? "opacity-70" : ""
+                }`}
+                value={rate * 100}
+                onChange={handleRateChange}
+                min={
+                  rateType === "sharing"
+                    ? applicableRateRange.min * 100
+                    : undefined
+                }
+                max={
+                  rateType === "sharing"
+                    ? applicableRateRange.max * 100
+                    : undefined
+                }
+                disabled={rateType === "purchase"}
+              />
+              {rateType === "sharing" && (
+                <div className="text-yellow-500 mt-1 text-xs">
+                  Enter rate between {applicableRateRange.min * 100} to{" "}
+                  {applicableRateRange.max * 100} for {coins.toLocaleString()}{" "}
+                  coins
+                </div>
+              )}
+              {rateType === "purchase" && (
+                <div className="text-yellow-500 mt-1 text-xs">
+                  Fixed purchase rate: {panel.purchaserate * 100}
+                </div>
+              )}
+            </div>
+
+            {/* Rate Chart - Only show in sharing mode */}
             {rateType === "sharing" && (
               <div className="my-4">
                 <button
@@ -602,6 +656,7 @@ const CreateWebPanel = () => {
               </div>
             )}
 
+            {/* Total Calculated Amount */}
             {!showRateChart && (
               <div className="mt-4">
                 <div className="text-sm tracking-wide">
@@ -615,7 +670,7 @@ const CreateWebPanel = () => {
                 </div>
               </div>
             )}
-          </div> */}
+          </div>
 
           {/* Action Buttons */}
           <div className="flex space-x-3">
@@ -646,7 +701,7 @@ const CreateWebPanel = () => {
               disabled={isProcessing}
               type="submit"
             >
-              {isProcessing ? "Processing..." : "Create Instant ID"}
+              {isProcessing ? "Processing..." : "Buy Now"}
             </button>
           </div>
         </form>

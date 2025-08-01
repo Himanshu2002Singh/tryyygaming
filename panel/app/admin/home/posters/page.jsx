@@ -24,6 +24,7 @@ const Posters = () => {
     categoryName: "",
     description: "",
     isActive: true,
+    coinCost: 0,
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -67,6 +68,12 @@ const Posters = () => {
       categoryName: poster.categoryName || "",
       description: poster.description || "",
       isActive: poster.isActive,
+      coinCost:
+        poster.coinCost !== undefined
+          ? Number(poster.coinCost)
+          : poster.images && poster.images[0]?.coinCost
+          ? Number(poster.images[0].coinCost)
+          : 0, // Add more fallback options
     });
     setImagePreview(poster.src);
     setShowSideForm(true);
@@ -92,7 +99,14 @@ const Posters = () => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : value,
+      [name]:
+        type === "number"
+          ? value === ""
+            ? 0
+            : Number(value) // Convert to number, default to 0 if empty
+          : type === "checkbox"
+          ? checked
+          : value,
     });
   };
 
@@ -126,6 +140,7 @@ const Posters = () => {
     formDataToSend.append("categoryName", formData.categoryName);
     formDataToSend.append("description", formData.description || "");
     formDataToSend.append("isActive", formData.isActive);
+    formDataToSend.append("coinCost", formData.coinCost || 0); // Add coin cost to form data
 
     if (imageFile) {
       formDataToSend.append("image", imageFile);
@@ -251,12 +266,12 @@ const Posters = () => {
   });
 
   return (
-    <div className="w-full h-screen bg-black">
+    <div className="w-full h-screen bg-[#D9D9D9] flex flex-col sm:flex-row">  
       {/* Main content area */}
       <div className="w-full flex-1 p-6 transition-all duration-300">
         <div className="rounded-lg shadow">
           <div className="p-0 sm:p-6">
-            <h1 className="text-xl font-semibold text-white mb-6">
+            <h1 className="text-xl font-semibold text-black mb-6">
               Poster Management
             </h1>
 
@@ -284,13 +299,13 @@ const Posters = () => {
 
             {/* Categories and Posters Display */}
             {isLoading && (
-              <div className="text-center py-8 text-white">
+              <div className="text-center py-8 text-black">
                 Loading posters...
               </div>
             )}
 
             {!isLoading && filteredCategories.length === 0 && (
-              <div className="text-center py-8 text-white">
+              <div className="text-center py-8 text-black">
                 No posters found.
               </div>
             )}
@@ -300,13 +315,14 @@ const Posters = () => {
                 {filteredCategories.map((category) => (
                   <div
                     key={category.id}
-                    className="bg-[var(--color-secondary)] rounded-lg overflow-hidden"
+                    className="bg-white rounded-lg overflow-hidden shadow-2xl"
                   >
                     <div
-                      className="bg-[var(--color-primary)] text-black p-3 flex justify-between items-center cursor-pointer"
+                      className="bg-[var(--color-primary)] text-black p-3 flex justify-between items-center cursor-pointer shadow-2xl"
                       onClick={() => toggleCategoryExpand(category.id)}
                     >
                       <h2 className="text-lg font-semibold">{category.name}</h2>
+                      ({category.coinCost} coins)
                       <div className="flex items-center">
                         <span className="mr-2 text-sm">
                           {category.images.length} poster
@@ -337,16 +353,17 @@ const Posters = () => {
                                     handleEditPoster({
                                       ...poster,
                                       categoryName: category.name,
+                                      coinCost: poster.coinCost, // Explicitly pass coin cost
                                     })
                                   }
-                                  className="bg-blue-500 p-1.5 rounded-full text-white hover:bg-blue-600"
+                                  className="bg-blue-500 p-1.5 rounded-full text-black hover:bg-blue-600"
                                   title="Edit"
                                 >
                                   <FiEdit size={14} />
                                 </button>
                                 <button
                                   onClick={() => handleDeletePoster(poster.id)}
-                                  className="bg-red-500 p-1.5 rounded-full text-white hover:bg-red-600"
+                                  className="bg-red-500 p-1.5 rounded-full text-black hover:bg-red-600"
                                   title="Delete"
                                 >
                                   <FiTrash2 size={14} />
@@ -365,7 +382,7 @@ const Posters = () => {
                               </div>
                             </div>
                             {poster.description && (
-                              <div className="p-3 text-white text-sm">
+                              <div className="p-3 text-black text-sm">
                                 {poster.description}
                               </div>
                             )}
@@ -383,7 +400,7 @@ const Posters = () => {
 
       {/* Side form */}
       {showSideForm && (
-        <div className="fixed right-0 top-0 sm:w-96 h-full bg-black shadow-lg border-l border-gray-200 z-10 p-6 overflow-y-auto">
+        <div className="fixed right-0 top-0 sm:w-96 h-full bg-[#D9D9D9] shadow-lg border-l border-gray-200 z-10 p-6 overflow-y-auto">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-semibold text-[var(--color-primary)]">
               {editingPoster ? "Edit Poster" : "Add New Poster"}
@@ -416,7 +433,7 @@ const Posters = () => {
                     Or select existing category:
                   </label>
                   <select
-                    className="w-full bg-black px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                    className="w-full bg-white px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
                     onChange={(e) =>
                       setFormData({ ...formData, categoryName: e.target.value })
                     }
@@ -432,6 +449,23 @@ const Posters = () => {
                 </div>
               )}
             </div>
+            <div className="mb-4">
+              <label className="block text-[var(--color-text)] mb-2">
+                Coin Cost (Optional)
+              </label>
+              <input
+                type="number"
+                name="coinCost"
+                value={formData.coinCost}
+                onChange={handleInputChange}
+                placeholder="Enter coin cost for this poster"
+                min="0"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Coins required to use this poster template
+              </p>
+            </div>
 
             <div className="mb-4">
               <label className="block text-[var(--color-text)] mb-2">
@@ -439,7 +473,7 @@ const Posters = () => {
               </label>
               <div className="flex flex-col items-center space-y-3">
                 {imagePreview && (
-                  <div className="w-full h-40 overflow-hidden rounded-md border border-gray-300">
+                  <div className="w-full h-40 overflow-hidden rounded-md border border-black">
                     <img
                       src={imagePreview}
                       alt="Poster preview"
@@ -448,7 +482,7 @@ const Posters = () => {
                   </div>
                 )}
                 <div className="w-full">
-                  <label className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-neutral-900">
+                  <label className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray rounded-md cursor-pointer hover:bg-white">
                     <div className="flex flex-col items-center">
                       <FiImage size={24} className="text-gray-400 mb-2" />
                       <span className="text-sm text-gray-400">
@@ -501,7 +535,7 @@ const Posters = () => {
               <button
                 type="button"
                 onClick={handleCloseForm}
-                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition"
+                className="px-4 py-2 bg-gray-500 text-black rounded-md hover:bg-gray-600 transition"
                 disabled={isLoading}
               >
                 Cancel
@@ -521,8 +555,8 @@ const Posters = () => {
       {/* Overlay for when side form is open */}
       {showSideForm && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-0"
-          onClick={handleCloseForm}
+        className="fixed inset-0  backdrop-blur-[3px] z-0"
+        onClick={handleCloseForm}
         />
       )}
     </div>

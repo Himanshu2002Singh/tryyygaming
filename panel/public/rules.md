@@ -4,13 +4,13 @@ _PLEASE READ OUR RULES BEFORE PLACING BET \*\* ONCE OUR EXCHANGE GIVE USERNAME A
 
 1 CHEAT RULES: -
 
-_1.1) In betfair.ind.in games & Fancy markets, If anyone is suspected using ground commentary or ground line or courtsiding(being in ground while betting), company will void all winning bets(without providing any proof). This is a zero tolerance policy and no arguments will be entertained. The bets will be voided after the match is completed. Company's decision will be final decision._
+_1.1) In Betfair & Fancy markets, If anyone is suspected using ground commentary or ground line or courtsiding(being in ground while betting), company will void all winning bets(without providing any proof). This is a zero tolerance policy and no arguments will be entertained. The bets will be voided after the match is completed. Company's decision will be final decision._
 
 2 MATCH ODDS RULES: -
 
-_2.1) Cricket: We will follow betfair.ind.in games result.
-2.2) Soccer: We will follow betfair.ind.in games result.
-2.3) Tennis: We will follow betfair.ind.in games result.
+_2.1) Cricket: We will follow Betfair result.
+2.2) Soccer: We will follow Betfair result.
+2.3) Tennis: We will follow Betfair result.
 2.4) IF Any Client Found Hedging Or Doing Manipulation in Any Match Odds, then company has the right to Void the Bets.
 2.5) If Exchange resettle any bets or Markets due to wrong Result Declaration or any other reason & if the Player has lost Money or If Player gets Negative Balance, In this case Company will do the Settlement from Agent for the same, all decision will be Full And Final, No Arguments will be listened.
 2.6) Company reserves the right to void any bets (only winning bets) of any event at any point of the match if the company believes there is any cheating/wrong doing in that particular event by the players (either batsman/bowler)._

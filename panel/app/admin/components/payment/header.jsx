@@ -37,7 +37,7 @@ const AdminPaymentheader = ({ toggleSidebar, isSidebarOpen }) => {
   };
 
   return (
-    <header className="w-full bg-[var(--color-secondary)]  shadow-2xl px-4 py-2 z-30">
+    <header className="w-full bg-[var(--color-secondary)]  shadow px-4 py-2 z-30">
       {/* Desktop View */}
       <div className="flex justify-between items-center">
         <div className="flex items-center">
@@ -49,7 +49,7 @@ const AdminPaymentheader = ({ toggleSidebar, isSidebarOpen }) => {
             {isSidebarOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
           </button>
           <div className=" text-black font-bold rounded-md p-1 mr-2">
-            <img src="/logo-gs.png" alt="Logo" className="h-9" />
+            <img src="/logo-gs.png" alt="Logo" className="h-6" />
             {/* BET FAIR */}
           </div>
         </div>
@@ -92,7 +92,7 @@ const AdminPaymentheader = ({ toggleSidebar, isSidebarOpen }) => {
             </svg>
           </button>
           <div className="text-right">
-            <div className="text-sm text-white">Balance {user?.coins}</div>
+            <div className="text-sm text-gray-500">Balance {user?.coins}</div>
           </div>
           <div className="text-right">
             <div
@@ -130,28 +130,27 @@ const AdminPaymentheader = ({ toggleSidebar, isSidebarOpen }) => {
       {isMenuOpen && (
         <div className="md:hidden mt-4 py-3 border-t border-gray-200">
           <div className="flex flex-col space-y-4">
-            <div className="flex items-center justify-between">
-              <button className="text-gray-500">
-                <FaArrowLeft size={20} />
-              </button>
-              <button className="text-gray-500">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                </svg>
-              </button>
+            <div className="flex items-center justify-end">
+              <Link href={"/admin/home/profile"}>
+                <button className="bg-gray-200 rounded-full p-2">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </button>
+              </Link>
             </div>
             <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-white">
                 Balance {user?.coins || 0}
               </div>
               <div

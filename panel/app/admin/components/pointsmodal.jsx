@@ -50,7 +50,7 @@ const PointsModal = ({
   };
 
   return (
-    <div className="w-full pb-3 overflow-hidden bg-[#393939]">
+    <div className="w-full pb-3 overflow-hidden bg-[#D9D9D9] text-black">
       <div className="bg-[#171717] rounded-t-lg text-white text-center p-3 text-sm">
         {getTitle()}
       </div>
@@ -58,11 +58,11 @@ const PointsModal = ({
         <div className="mb-4">
           <label
             htmlFor="points"
-            className="block text-sm font-medium text-white mb-1"
+            className="block text-sm font-medium text-black mb-1"
           >
             {`Enter points to ${action}:`}
           </label>
-          <p className="text-white mb-2">
+          <p className="text-black mb-2">
             Current {action === "credit" ? "Credit" : "Points"}:{" "}
             {getDisplayPoints()}
           </p>
@@ -71,7 +71,7 @@ const PointsModal = ({
             id="points"
             value={points}
             onChange={(e) => setPoints(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+            className="w-full text-black px-3 py-2 border border-black rounded-md focus:outline-none"
             placeholder="0"
             autoFocus
           />
@@ -87,7 +87,7 @@ const PointsModal = ({
           </button>
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-blue-600 text-black rounded-md hover:bg-blue-700"
           >
             {action === "add"
               ? "Add"

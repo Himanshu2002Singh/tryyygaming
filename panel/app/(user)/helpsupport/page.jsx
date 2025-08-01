@@ -8,10 +8,10 @@ export default function FullScreenChatSupport() {
   const { user } = useContext(AuthContext);
   const [conversationId, setConversationId] = useState(null);
   const [messages, setMessages] = useState([
-    {
-      sender: "bot",
+    { 
+      sender: "bot", 
       text: "Hello! How can I assist you today? Please select an option:",
-      isCategories: true,
+      isCategories: true 
     },
   ]);
   const [inputText, setInputText] = useState("");
@@ -23,89 +23,65 @@ export default function FullScreenChatSupport() {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const chatContainerRef = useRef(null);
-  const [activeWhatsapp, setActiveWhatsapp] = useState(null);
-  const fetchActiveWhatsapp = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/admin/active-whatsapp`);
-      setActiveWhatsapp(response.data.whatsapp);
-    } catch (error) {
-      console.error("Error fetching active WhatsApp:", error);
-      // Handle error, e.g., set a default value or display an error message
-      setActiveWhatsapp(null); // Or some default value
-    }
-  };
 
-  useEffect(() => {
-    fetchActiveWhatsapp();
-  }, []);
   // FAQ data structure
   const faqData = {
     "Account Statement": [
       {
         question: "How can I check my account balance?",
-        answer:
-          "You can view your account balance in the 'Wallet' section of your account dashboard.",
+        answer: "You can view your account balance in the 'Wallet' section of your account dashboard."
       },
       {
         question: "Where can I see my transaction history?",
-        answer:
-          "Go to 'Account Statement' in your profile to view all transactions.",
+        answer: "Go to 'Account Statement' in your profile to view all transactions."
       },
       {
         question: "How do I download my account statement?",
-        answer:
-          "In the 'Account Statement' section, click 'Download' and select the date range.",
-      },
+        answer: "In the 'Account Statement' section, click 'Download' and select the date range."
+      }
     ],
     "Deposit Issues": [
       {
         question: "My deposit is not reflecting in my account",
-        answer:
-          "Please share your transaction ID and we'll check the status for you.",
+        answer: "Please share your transaction ID and we'll check the status for you."
       },
       {
         question: "What are the deposit methods available?",
-        answer:
-          "We accept UPI, Net Banking, Credit/Debit Cards, and Cryptocurrency.",
+        answer: "We accept UPI, Net Banking, Credit/Debit Cards, and Cryptocurrency."
       },
       {
         question: "Is there a minimum deposit amount?",
-        answer: "Yes, the minimum deposit amount is ₹500.",
-      },
+        answer: "Yes, the minimum deposit amount is ₹500."
+      }
     ],
     "Withdrawal Problems": [
       {
         question: "Why is my withdrawal pending?",
-        answer:
-          "Withdrawals typically take 5-15 minutes for crypto and up to 24 hours for bank transfers.",
+        answer: "Withdrawals typically take 5-15 minutes for crypto and up to 24 hours for bank transfers."
       },
       {
         question: "What is the minimum withdrawal amount?",
-        answer: "The minimum withdrawal amount is ₹1000.",
+        answer: "The minimum withdrawal amount is ₹1000."
       },
       {
         question: "My withdrawal failed, what should I do?",
-        answer:
-          "Please provide your username and transaction ID for us to investigate.",
-      },
+        answer: "Please provide your username and transaction ID for us to investigate."
+      }
     ],
     "Technical Support": [
       {
         question: "The app is not working properly",
-        answer:
-          "Try clearing your cache or reinstalling the app. If issue persists, let us know.",
+        answer: "Try clearing your cache or reinstalling the app. If issue persists, let us know."
       },
       {
         question: "I can't login to my account",
-        answer:
-          "Please try resetting your password or contact us with your username.",
+        answer: "Please try resetting your password or contact us with your username."
       },
       {
         question: "The website is not loading",
-        answer:
-          "Check your internet connection or try accessing from a different device.",
-      },
-    ],
+        answer: "Check your internet connection or try accessing from a different device."
+      }
+    ]
   };
 
   const saveMessageToAPI = (message) => {
@@ -116,9 +92,9 @@ export default function FullScreenChatSupport() {
         ...message,
         userId: user?.id,
         conversationId: conversationId,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       }),
-    }).catch((error) => {
+    }).catch(error => {
       console.error("Error saving message:", error);
     });
   };
@@ -138,61 +114,61 @@ export default function FullScreenChatSupport() {
     if (inputText.trim() === "") return;
 
     const userMessage = { sender: "user", text: inputText };
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages(prev => [...prev, userMessage]);
     saveMessageToAPI(userMessage);
     setInputText("");
 
     if (awaitingUsername) {
       setAwaitingUsername(false);
       setAwaitingIssueDetails(true);
-      const botResponse = {
-        sender: "bot",
+      const botResponse = { 
+        sender: "bot", 
         text: "Thank you for sharing your username. Please describe your issue in detail:",
-        showInput: true,
+        showInput: true
       };
-      setMessages((prev) => [...prev, botResponse]);
+      setMessages(prev => [...prev, botResponse]);
       saveMessageToAPI(botResponse);
       return;
     }
 
     if (awaitingIssueDetails) {
       setAwaitingIssueDetails(false);
-      const botResponse = {
-        sender: "bot",
+      const botResponse = { 
+        sender: "bot", 
         text: "We've received your issue details. Our support team will contact you shortly. For immediate assistance, you can also contact us on WhatsApp.",
-        isWhatsApp: true,
+        isWhatsApp: true
       };
-      setMessages((prev) => [...prev, botResponse]);
+      setMessages(prev => [...prev, botResponse]);
       saveMessageToAPI(botResponse);
       return;
     }
 
     // For normal messages
-    const botResponse = {
-      sender: "bot",
+    const botResponse = { 
+      sender: "bot", 
       text: "We've received your message. Would you like to browse our FAQ for quick answers?",
-      isCategories: true,
+      isCategories: true
     };
     setTimeout(() => {
-      setMessages((prev) => [...prev, botResponse]);
+      setMessages(prev => [...prev, botResponse]);
       saveMessageToAPI(botResponse);
     }, 1000);
   };
 
   const openWhatsApp = () => {
-    window.open(`https://wa.me/${activeWhatsapp}`, "_blank");
+    window.open("https://wa.me/1234567890", "_blank");
   };
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     const userMessage = { sender: "user", text: category };
-    const botResponse = {
-      sender: "bot",
+    const botResponse = { 
+      sender: "bot", 
       text: `You selected: ${category}. Please choose your query:`,
       isQuestions: true,
-      questions: faqData[category],
+      questions: faqData[category]
     };
-    setMessages((prev) => [...prev, userMessage, botResponse]);
+    setMessages(prev => [...prev, userMessage, botResponse]);
     saveMessageToAPI(userMessage);
     saveMessageToAPI(botResponse);
   };
@@ -200,12 +176,12 @@ export default function FullScreenChatSupport() {
   const handleQuestionSelect = (questionObj) => {
     setSelectedQuestion(questionObj);
     const userMessage = { sender: "user", text: questionObj.question };
-    const botResponse = {
-      sender: "bot",
+    const botResponse = { 
+      sender: "bot", 
       text: questionObj.answer,
-      showOptions: true,
+      showOptions: true
     };
-    setMessages((prev) => [...prev, userMessage, botResponse]);
+    setMessages(prev => [...prev, userMessage, botResponse]);
     saveMessageToAPI(userMessage);
     saveMessageToAPI(botResponse);
   };
@@ -213,22 +189,22 @@ export default function FullScreenChatSupport() {
   const showCategories = () => {
     setSelectedCategory(null);
     setSelectedQuestion(null);
-    const botResponse = {
-      sender: "bot",
+    const botResponse = { 
+      sender: "bot", 
       text: "Please select a category:",
-      isCategories: true,
+      isCategories: true
     };
-    setMessages((prev) => [...prev, botResponse]);
+    setMessages(prev => [...prev, botResponse]);
     saveMessageToAPI(botResponse);
   };
 
   const requestCustomSupport = () => {
-    const botResponse = {
-      sender: "bot",
+    const botResponse = { 
+      sender: "bot", 
       text: "To help you better, please provide your username:",
-      showInput: true,
+      showInput: true
     };
-    setMessages((prev) => [...prev, botResponse]);
+    setMessages(prev => [...prev, botResponse]);
     saveMessageToAPI(botResponse);
     setAwaitingUsername(true);
     inputRef.current?.focus();
@@ -270,10 +246,10 @@ export default function FullScreenChatSupport() {
                 }`}
               >
                 <p className="text-sm">{msg.text}</p>
-
+                
                 {msg.isCategories && (
                   <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {Object.keys(faqData).map((category) => (
+                    {Object.keys(faqData).map(category => (
                       <button
                         key={category}
                         onClick={() => handleCategorySelect(category)}
@@ -290,7 +266,7 @@ export default function FullScreenChatSupport() {
                     </button>
                   </div>
                 )}
-
+                
                 {msg.isQuestions && (
                   <div className="mt-3 space-y-2">
                     {msg.questions.map((item, idx) => (
@@ -310,7 +286,7 @@ export default function FullScreenChatSupport() {
                     </button>
                   </div>
                 )}
-
+                
                 {msg.showOptions && (
                   <div className="mt-3 space-y-2">
                     <button
@@ -327,7 +303,7 @@ export default function FullScreenChatSupport() {
                     </button>
                   </div>
                 )}
-
+                
                 {msg.showInput && (
                   <div className="mt-3">
                     <form onSubmit={handleSubmit} className="flex mt-2">
@@ -335,8 +311,8 @@ export default function FullScreenChatSupport() {
                         ref={inputRef}
                         type="text"
                         placeholder={
-                          awaitingUsername
-                            ? "Type your username..."
+                          awaitingUsername 
+                            ? "Type your username..." 
                             : "Describe your issue..."
                         }
                         value={inputText}
@@ -352,7 +328,7 @@ export default function FullScreenChatSupport() {
                     </form>
                   </div>
                 )}
-
+                
                 {msg.isWhatsApp && (
                   <button
                     onClick={openWhatsApp}
@@ -377,11 +353,8 @@ export default function FullScreenChatSupport() {
 
       {/* Main input area */}
       {!awaitingUsername && !awaitingIssueDetails && (
-        <div className="bg-gray-900 mb-12 p-4 border-t border-gray-800">
-          <form
-            onSubmit={handleSubmit}
-            className="w-full max-w-3xl mx-auto flex"
-          >
+        <div className="bg-gray-900 p-4 border-t border-gray-800">
+          <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto flex">
             <input
               ref={inputRef}
               type="text"

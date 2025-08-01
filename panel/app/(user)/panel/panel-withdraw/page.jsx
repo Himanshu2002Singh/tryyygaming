@@ -12,6 +12,7 @@ import { useUserBank } from "../../context/userbankprovider";
 import { useBottomSheet } from "../../context/BottomSheet";
 import MessageAlert from "../../components/alert";
 import { toast, ToastContainer } from "react-toastify";
+
 // Create a separate component that uses useSearchParams
 function PanelWithdrawContent() {
   const { activeBanks, loading, addBankAccount } = useUserBank();
@@ -128,6 +129,7 @@ function PanelWithdrawContent() {
     <div className="relative h-full p-4 bg-[#111111] text-white">
       {/* Header Panel */}
       <ToastContainer />
+
       <div className="bg-[var(--color-secondary)] rounded-lg p-4 mb-4 flex-col">
         <div className="flex items-center">
           <div className="w-10 h-10 bg-gray-600 rounded-full mr-4 overflow-hidden">
@@ -135,7 +137,7 @@ function PanelWithdrawContent() {
               <img
                 src={panelData.panelDetails.logo}
                 alt="logo"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
@@ -145,6 +147,7 @@ function PanelWithdrawContent() {
           </div>
           <div className="flex-1">
             <h1 className="text-white text-xs">
+              {" "}
               {panelData?.panelDetails?.name}
             </h1>
             <p className="text-gray-400 text-sm">
@@ -162,7 +165,7 @@ function PanelWithdrawContent() {
           </div>
         </div>
         <div className="w-full h-0.5"></div>
-        {/* <div className="bg-[#171717] rounded-b-lg p-2 text-xs">
+        <div className="bg-[#171717] rounded-b-lg p-2 text-xs">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <IoIosEye className="text-gray-400 mr-2" />
@@ -170,7 +173,7 @@ function PanelWithdrawContent() {
             </div>
             <span className="text-white">{panelData?.rate}</span>
           </div>
-        </div> */}
+        </div>
       </div>
 
       {/* Withdraw Coins */}
@@ -183,9 +186,9 @@ function PanelWithdrawContent() {
             onChange={handleAmountChange}
             className="w-full bg-transparent text-white text-sm border-none outline-none"
           />
-          {/* <span className="float-right text-white text-sm">
+          <span className="float-right text-white text-sm">
             {panelData?.rate} × {amount} = ₹ {convertedAmount.toFixed(0)}
-          </span> */}
+          </span>
         </div>
       </div>
       <div className="flex justify-between items-center mt-1">
@@ -237,7 +240,7 @@ function PanelWithdrawContent() {
       )}
 
       {/* Action Buttons */}
-      <div className="flex gap-2 p-4">
+      <div className="absolute bottom-0 left-0 right-0 flex gap-2 p-4">
         <button
           type="submit"
           onClick={handleSubmit}

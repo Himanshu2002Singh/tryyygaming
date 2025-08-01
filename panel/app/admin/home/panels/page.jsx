@@ -38,6 +38,9 @@ const CreatePanel = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [totalPages, setTotalPages] = useState(0); // Total pages for pagination
   // Predefined categories
+  const [selectedPanelRateChart, setSelectedPanelRateChart] = useState(null);
+  const [showRateChartModal, setShowRateChartModal] = useState(false);
+
   const predefinedCategories = [
     "World",
     "Diamond",
@@ -172,22 +175,11 @@ const CreatePanel = () => {
       if (editMode) {
         await axios.put(
           `${API_URL}/admin/update-panels/${currentPanelId}`,
-          formDataToSend,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("admintoken")}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
+          formDataToSend
         );
         toast.success("Panel updated successfully");
       } else {
-        await axios.post(`${API_URL}/admin/create-panel`, formDataToSend, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("admintoken")}`,
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        await axios.post(`${API_URL}/admin/create-panel`, formDataToSend);
         toast.success("Panel created successfully");
       }
 
@@ -251,11 +243,7 @@ const CreatePanel = () => {
     if (window.confirm("Are you sure you want to delete this panel?")) {
       try {
         setLoading(true);
-        await axios.delete(`${API_URL}/admin/delete-panel/${id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("admintoken")}`,
-          },
-        });
+        await axios.delete(`${API_URL}/admin/delete-panel/${id}`);
         toast.success("Panel deleted successfully");
         fetchPanels();
       } catch (error) {
@@ -322,7 +310,7 @@ const CreatePanel = () => {
               d="M12 6v6m0 0v6m0-6h6m-6 0H6"
             ></path>
           </svg>
-          Add ID
+          Add Panel
         </button>
       </div>
 
@@ -332,12 +320,12 @@ const CreatePanel = () => {
           <div className="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-sm sm:text-2xl font-bold text-black">
-                  {editMode ? "Edit ID" : "Create New ID"}
+                <h2 className="text-2xl font-bold text-black">
+                  {editMode ? "Edit Panel" : "Create New Panel"}
                 </h2>
                 <button
                   onClick={() => setShowModal(false)}
-                  className="text-black-400 hover:text-black"
+                  className="text-gray-400 hover:text-white"
                 >
                   <svg
                     className="w-6 h-6"
@@ -357,17 +345,13 @@ const CreatePanel = () => {
               </div>
 
               {/* B2B/B2C Toggle Switch */}
-              <div className="mb-6 bg-black-800 p-2 sm:p-4 rounded-lg border border-gray-700">
+              <div className="mb-6 bg-black-800 p-4 rounded-lg border border-gray-700">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm sm:text-lg font-medium">
-                    ID Type:
-                  </span>
+                  <span className="text-lg font-medium">Panel Type:</span>
                   <div className="flex items-center">
                     <span
                       className={`mr-2 ${
-                        !isB2B
-                          ? "text-[var(--color-primary)]"
-                          : "text-black-400"
+                        !isB2B ? "text-green-500" : "text-black-400"
                       }`}
                     >
                       B2C
@@ -378,7 +362,7 @@ const CreatePanel = () => {
                     >
                       <div
                         className={`w-12 h-6 rounded-full transition-colors duration-300 ease-in-out ${
-                          isB2B ? "bg-[var(--color-primary)]" : "bg-gray-600"
+                          isB2B ? "bg-green-500" : "bg-gray-600"
                         }`}
                       >
                         <div
@@ -390,7 +374,7 @@ const CreatePanel = () => {
                     </div>
                     <span
                       className={`ml-2 ${
-                        isB2B ? "text-[var(--color-primary)]" : "text-gray-400"
+                        isB2B ? "text-green-500" : "text-gray"
                       }`}
                     >
                       B2B
@@ -405,10 +389,10 @@ const CreatePanel = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
-                  <div className="text-sm mb-4">
-                    <label className="block text-sm sm:text-base text-black-300 mb-2 font-medium">
-                      ID Name
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="mb-4">
+                    <label className="block text-black-300 mb-2 font-medium">
+                      Panel Name
                     </label>
                     <input
                       type="text"
@@ -421,7 +405,7 @@ const CreatePanel = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="block text-black-600 mb-2 font-medium">
+                    <label className="block text-black mb-2 font-medium">
                       Category
                     </label>
                     <div className="relative">
@@ -431,7 +415,7 @@ const CreatePanel = () => {
                         value={formData.category}
                         onChange={handleChange}
                         list="categoryOptions"
-                        className="w-full p-3 border rounded bg-gray border-gray-600 text-black-100 focus:outline-none focus:ring-2 focus:ring-black-500 focus:border-transparent"
+                        className="w-full p-3 border rounded bg-gray border-gray-600 text-black-100 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                         required
                         placeholder="Select or type a custom category"
                       />
@@ -441,13 +425,13 @@ const CreatePanel = () => {
                         ))}
                       </datalist>
                     </div>
-                    <p className="text-xs text-gray mt-1">
+                    <p className="text-xs text-gray-400 mt-1">
                       Choose from predefined categories or add your own
                     </p>
                   </div>
 
                   <div className="mb-4">
-                    <label className="text-sm sm:text-base block text-gray mb-2 font-medium">
+                    <label className="block text-black mb-2 font-medium">
                       Website URL
                     </label>
                     <input
@@ -455,13 +439,13 @@ const CreatePanel = () => {
                       name="website"
                       value={formData.website}
                       onChange={handleChange}
-                      className="w-full p-3 border rounded bg-gray border-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full p-3 border rounded bg-gray border-gray-600 text-black-100 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                       required
                     />
                   </div>
 
                   <div className="mb-4">
-                    <label className="text-sm sm:text-base block text-gray mb-2 font-medium">
+                    <label className="block text-black mb-2 font-medium">
                       API URL (optional)
                     </label>
                     <input
@@ -469,12 +453,12 @@ const CreatePanel = () => {
                       name="apiurl"
                       value={formData.apiurl}
                       onChange={handleChange}
-                      className="w-full p-3 border rounded bg-gray border-gray-600 text-gray focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full p-3 border rounded bg-gray border-gray-600 text-black-100 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                     />
                   </div>
 
                   <div className="mb-4 col-span-2">
-                    <label className="block text-sm sm:text-base text-gray mb-2 font-medium">
+                    <label className="block text-black mb-2 font-medium">
                       Logo
                     </label>
                     <div className="flex items-center">
@@ -519,7 +503,7 @@ const CreatePanel = () => {
                             </label>
                           </div>
                         ) : (
-                          <label className="w-full flex items-center p-3 cursor-pointer hover:bg-gray-600">
+                          <label className="w-full flex items-center p-3 cursor-pointer hover:bg-gray">
                             <svg
                               className="w-6 h-6 mr-2 text-gray-400"
                               fill="none"
@@ -534,7 +518,9 @@ const CreatePanel = () => {
                                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                               ></path>
                             </svg>
-                            <span className="text-gray">Select ID logo</span>
+                            <span className="text-black">
+                              Select panel logo
+                            </span>
                             <input
                               type="file"
                               accept="image/*"
@@ -547,15 +533,15 @@ const CreatePanel = () => {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="mb-4">
-                    <label className="block text-white mb-2 font-medium">
+                  <div className="mb-4">
+                    <label className="block text-black mb-2 font-medium">
                       Account Type
                     </label>
                     <select
                       name="accounttype"
                       value={formData.accounttype}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border bg-black rounded-lg focus:outline-none focus:ring-2 "
+                      className="w-full px-3 py-2 border bg-grey rounded-lg focus:outline-none focus:ring-2 "
                     >
                       {accountTypes.map((type, index) => (
                         <option key={index} value={type}>
@@ -563,10 +549,10 @@ const CreatePanel = () => {
                         </option>
                       ))}
                     </select>
-                  </div> */}
+                  </div>
                 </div>
-                {/* <div className="mb-4">
-                  <label className="block text-gray mb-2 font-medium">
+                <div className="mb-4">
+                  <label className="block text-black mb-2 font-medium">
                     Purchase Rate (%)
                   </label>
                   <input
@@ -576,11 +562,11 @@ const CreatePanel = () => {
                     step="1"
                     min="0"
                     onChange={handleChange}
-                    className="w-full p-3 border rounded bg-gray border-gray-600 text-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                    className="w-full p-3 border rounded bg-gray border-gray-600 text-gray-100 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
                   />
-                </div> */}
+                </div>
                 {/* Rate Chart Section */}
-                {/* <div className="mt-6 mb-6">
+                <div className="mt-6 mb-6">
                   <div className="flex justify-between items-center mb-3">
                     <h3 className="text-xl font-semibold text-[var(--color-primary)]">
                       Sharing Rate Chart (%)
@@ -588,7 +574,7 @@ const CreatePanel = () => {
                     <button
                       type="button"
                       onClick={addRateChartRow}
-                      className="bg-gray text-cyan-400 px-3 py-1 rounded hover:bg-gray-600 transition-colors flex items-center text-sm"
+                      className="bg-graytext-cyan-400 px-3 py-1 rounded hover:bg-gray-600 transition-colors flex items-center text-sm"
                     >
                       <svg
                         className="w-4 h-4 mr-1"
@@ -629,7 +615,7 @@ const CreatePanel = () => {
                                 e.target.value
                               )
                             }
-                            className="w-full p-2 border rounded bg-gray-800 border-gray-700 text-gray-100 focus:outline-none focus:ring-1 focus:ring-black"
+                            className="w-full p-2 border rounded bg-gray-800 border-gray-700 text-gray-100 focus:outline-none focus:ring-1 focus:ring-cyan-500"
                             placeholder="e.g. 10,000 +"
                             required
                           />
@@ -645,7 +631,7 @@ const CreatePanel = () => {
                                 e.target.value
                               )
                             }
-                            className="w-full p-2 border rounded bg-gray-800 border-gray-700 text-gray-100 focus:outline-none focus:ring-1 focus:ring-black"
+                            className="w-full p-2 border rounded bg-gray-800 border-gray-700 text-gray-100 focus:outline-none focus:ring-1 focus:ring-cyan-500"
                             placeholder="Min Rate"
                             required
                           />
@@ -661,7 +647,7 @@ const CreatePanel = () => {
                                 e.target.value
                               )
                             }
-                            className="w-full p-2 border rounded bg-gray-800 border-gray-700 text-gray-100 focus:outline-none focus:ring-1 focus:ring-black"
+                            className="w-full p-2 border rounded bg-gray-800 border-gray-700 text-gray-100 focus:outline-none focus:ring-1 focus:ring-cyan-500"
                             placeholder="Max Rate"
                             required
                           />
@@ -692,12 +678,12 @@ const CreatePanel = () => {
                       </div>
                     ))}
                   </div>
-                </div> */}
+                </div>
 
                 <div className="flex gap-3 mt-6">
                   <button
                     type="submit"
-                    className="text-sm sm:text-base bg-[var(--color-primary)] text-black px-5 py-2 rounded hover:bg-cyan-700 transition-colors flex items-center"
+                    className="bg-[var(--color-primary)] text-black px-5 py-2 rounded hover:bg-cyan-700 transition-colors flex items-center"
                     disabled={loading}
                   >
                     {loading ? (
@@ -742,7 +728,7 @@ const CreatePanel = () => {
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                               ></path>
                             </svg>
-                            Update ID
+                            Update Panel
                           </>
                         ) : (
                           <>
@@ -760,7 +746,7 @@ const CreatePanel = () => {
                                 d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                               ></path>
                             </svg>
-                            Create ID
+                            Create Panel
                           </>
                         )}
                       </>
@@ -770,7 +756,7 @@ const CreatePanel = () => {
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="text-sm sm:text-base bg-gray-600 text-white px-5 py-2 rounded hover:bg-gray transition-colors flex items-center"
+                    className="bg-gray-600 text-white px-5 py-2 rounded hover:bg-graytransition-colors flex items-center"
                   >
                     <svg
                       className="w-4 h-4 mr-2"
@@ -796,106 +782,106 @@ const CreatePanel = () => {
       )}
 
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-sm font-bold text-black">All IDs</h2>
+        <h2 className="text-sm font-bold text-[var(--color-primary)]">
+          All Panels
+        </h2>
 
         {loading && (
           <div className="flex items-center">
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black mr-2"></div>
-            <span className="text-black">Loading IDs...</span>
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-cyan-500 mr-2"></div>
+            <span className="text-gray-400">Loading panels...</span>
           </div>
         )}
       </div>
       <input
         type="text"
-        placeholder="Search IDs..."
+        placeholder="Search panels..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4 p-2 border rounded w-full bg-white border-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-black-500 focus:border-transparent"
+        className="mb-4 p-2 border rounded w-full bg-gray border-gray text-black focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
       />
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border rounded-lg overflow-hidden">
-          <thead className="bg-[var(--color-primary)] text-black">
+      <div className="overflow-x-auto rounded-lg shadow">
+        <table className="min-w-full bg-white border border-collapse">
+          <thead className="bg-[var(--color-primary)]">
             <tr>
-              <th className="py-3 px-4 text-left text-xs font-medium text-black-300 uppercase tracking-wider border-b border-gray-600">
+              <th className="py-3 px-4 text-left text-xs font-medium text-black uppercase tracking-wider border border-gray">
                 Logo
               </th>
-              <th className="py-3 px-4 text-left text-xs font-medium text-black-300 uppercase tracking-wider border-b border-gray-600">
+              <th className="py-3 px-4 text-left text-xs font-medium text-black uppercase tracking-wider border border-gray">
                 Name
               </th>
-              <th className="py-3 px-4 text-left text-xs font-medium text-black-300 uppercase tracking-wider border-b border-gray-600">
+              <th className="py-3 px-4 text-left text-xs font-medium text-black uppercase tracking-wider border border-gray">
                 Type
               </th>
-              <th className="py-3 px-4 text-left text-xs font-medium text-black-300 uppercase tracking-wider border-b border-gray-600">
+              <th className="py-3 px-4 text-left text-xs font-medium text-black uppercase tracking-wider border border-gray">
                 Category
               </th>
-              {/* <th className="py-3 px-4 text-left text-xs font-medium text-gray uppercase tracking-wider border-b border-gray-600">
+              <th className="py-3 px-4 text-left text-xs font-medium text-black uppercase tracking-wider border border-gray">
                 Rate Chart
-              </th> */}
-              <th className="py-3 px-4 text-left text-xs font-medium text-black-300 uppercase tracking-wider border-b border-gray-600">
+              </th>
+              <th className="py-3 px-4 text-left text-xs font-medium text-black uppercase tracking-wider border border-gray">
                 Website
               </th>
-              <th className="py-3 px-4 text-left text-xs font-medium text-black-300 uppercase tracking-wider border-b border-gray-600">
+              <th className="py-3 px-4 text-left text-xs font-medium text-black uppercase tracking-wider border border-gray">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
             {panels.length > 0 ? (
-              panels.map((panel, index) => (
-                <tr
-                  key={panel.id}
-                  className={`${
-                    index % 2 === 0 ? "bg-white" : "bg-[#E7E7E7]"
-                  }  text-black`}
-                >
-                  <td className="px-4 sm:py-3 whitespace-nowrap border">
+              panels.map((panel) => (
+                <tr key={panel.id} className="hover:bg-gray transition-colors ">
+                  <td className="py-3 px-4 text-white border-b border-gray-700">
                     <div className=" rounded">
                       <img
                         src={panel.logo}
                         alt={panel.name}
-                        className="h-12  rounded-full w-12 object-contain bg-black"
+                        className="h-12  rounded-full w-12 object-contain"
                       />
                     </div>
                   </td>
-                  <td className="px-4 sm:py-3 whitespace-nowrap border">
+                  <td className="py-3 px-4 border border-gray font-medium">
                     {panel.name}
                   </td>
-                  <td className="px-4 sm:py-3 whitespace-nowrap border">
+                  <td className="py-3 px-4 border border-gray">
                     <span
                       className={`px-2 py-1 rounded text-xs ${
                         panel.panelType === "B2B"
-                          ? "bg-purple-900 text-purple-200"
-                          : "bg-blue-900 text-blue-200"
+                          ? "bg-blue-900 text-purple-200"
+                          : "bg-orange-400 text-blue-200"
                       }`}
                     >
                       {panel.panelType || "B2C"}
                     </span>
                   </td>
-                  <td className="px-4 sm:py-3 whitespace-nowrap border">
+                  <td className="py-3 px-4 border border-gray">
                     {panel.category || "N/A"}
                   </td>
-                  {/* <td className="py-3 px-4 border-b border-gray-700">
+                  <td className="py-3 px-4 border border-gray">
                     <button
                       onClick={() => {
+                        setSelectedPanelRateChart(panel);
+                        setShowRateChartModal(true);
+
                         // You could implement a modal to show the full rate chart
-                        alert(
-                          "Rate Chart for " +
-                            panel.name +
-                            ":\n\n" +
-                            (panel.rateChart
-                              ? typeof panel.rateChart === "string"
-                                ? panel.rateChart
-                                : JSON.stringify(panel.rateChart, null, 2)
-                              : "No rate chart available")
-                        );
+                        // alert(
+                        //   "Rate Chart for " +
+                        //     panel.name +
+                        //     ":\n\n" +
+                        //     (panel.rateChart
+                        //       ? typeof panel.rateChart === "string"
+                        //         ? panel.rateChart
+                        //         : JSON.stringify(panel.rateChart, null, 2)
+                        //       : "No rate chart available")
+                        // );
                       }}
-                      className="bg-gray text-cyan-400 px-2 py-1 rounded text-xs hover:bg-gray-600"
+                      className="bg-graytext-cyan-400 px-2 py-1 rounded text-xs hover:bg-gray-600"
                     >
                       View Rates
                     </button>
-                  </td> */}
-                  <td className="px-4 sm:py-3 whitespace-nowrap border">
+                  </td>
+                  <td className="py-3 px-4 border border-gray">
                     <a
                       href={panel.website}
                       target="_blank"
@@ -919,7 +905,7 @@ const CreatePanel = () => {
                       Visit
                     </a>
                   </td>
-                  <td className="py-3 px-4 border-b border-gray-700">
+                  <td className="py-3 px-4 border border-gray-700">
                     <div className="flex space-x-2">
                       <button
                         onClick={() => handleEdit(panel)}
@@ -983,7 +969,7 @@ const CreatePanel = () => {
                         d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                       ></path>
                     </svg>
-                    No IDs found
+                    No panels found
                   </div>
                 </td>
               </tr>
@@ -1001,20 +987,79 @@ const CreatePanel = () => {
             subContainerClassName={"pages pagination"}
             containerClassName="flex gap-1"
             pageClassName="pagination-item"
-            pageLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray dark:hover:text-white"
+            pageLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-graydark:hover:text-white"
             previousClassName="pagination-item"
-            previousLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray dark:hover:text-white"
+            previousLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-graydark:hover:text-white"
             nextClassName="pagination-item"
-            nextLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray dark:hover:text-white"
+            nextLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-graydark:hover:text-white"
             breakClassName="pagination-item"
-            breakLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray dark:hover:text-white"
+            breakLinkClassName="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-graydark:hover:text-white"
             activeClassName="z-10"
-            activeLinkClassName="flex items-center justify-center px-3 py-2 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray dark:text-white"
+            activeLinkClassName="flex items-center justify-center px-3 py-2 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-graydark:text-white"
             disabledClassName="opacity-50 cursor-not-allowed"
             // ... other styling classes as needed
           />
         </div>
       </div>
+      {showRateChartModal && selectedPanelRateChart && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+          <div className="bg-white rounded-lg shadow-2xl max-w-md w-full p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">
+                Rate Chart for {selectedPanelRateChart.name}
+              </h2>
+              <button
+                onClick={() => setShowRateChartModal(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="border p-2">Coins</th>
+                    <th className="border p-2">Min Rate (%)</th>
+                    <th className="border p-2">Max Rate (%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(() => {
+                    // Parse rate chart if it's a string
+                    const rateChart =
+                      typeof selectedPanelRateChart.rateChart === "string"
+                        ? JSON.parse(selectedPanelRateChart.rateChart)
+                        : selectedPanelRateChart.rateChart;
+
+                    return rateChart.map((rate, index) => (
+                      <tr key={index} className="hover:bg-gray-50">
+                        <td className="border p-2 text-center">{rate.coins}</td>
+                        <td className="border p-2 text-center">
+                          {(parseFloat(rate.minRate) * 100).toFixed(2)}%
+                        </td>
+                        <td className="border p-2 text-center">
+                          {(parseFloat(rate.maxRate) * 100).toFixed(2)}%
+                        </td>
+                      </tr>
+                    ));
+                  })()}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={() => setShowRateChartModal(false)}
+                className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
