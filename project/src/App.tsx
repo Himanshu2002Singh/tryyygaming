@@ -376,11 +376,11 @@ const Navigation = () => {
                 ],
               },
               {
-                label: 'KA Panel',
+                label: 'Panel',
                 key: 'panel',
                 links: [
-                  { to: '/ka-dashboard', label: 'Dashboard' },
-                  { to: '/ka-reports', label: 'Reports' },
+                  { to: 'https://tryyygaming-8j9z.vercel.app/', label: 'Dashboard' },
+                  
                 ],
               },
             ].map(({ label, key, links }) => (
