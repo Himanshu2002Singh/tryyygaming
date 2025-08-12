@@ -53,7 +53,7 @@ const Panlecreate = () => {
       <div className="relative bg-[var(--color-primary)]  text-center flex justify-center overflow-hidden">
         {/* Wallet icon at top most right side, rotated 30 deg, behind hamburger menu */}
         <GiWallet
-          className="absolute top-[40%] left-[-2%] text-[#FFBB21] text-6xl sm:text-7xl z-10"
+          className="absolute top-[40%] left-[-2%] text-red text-6xl sm:text-7xl z-10"
           style={{ transform: "rotate(30deg)" }}
         />
         <GiWallet
