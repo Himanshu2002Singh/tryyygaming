@@ -53,39 +53,39 @@ const Panlecreate = () => {
       <div className="relative bg-[var(--color-primary)]  text-center flex justify-center overflow-hidden">
         {/* Wallet icon at top most right side, rotated 30 deg, behind hamburger menu */}
         <GiWallet
-          className="absolute top-[40%] left-[-2%] text-red text-6xl sm:text-7xl z-10"
+          className="absolute top-[40%] left-[-2%] text-white text-6xl sm:text-7xl z-10"
           style={{ transform: "rotate(30deg)" }}
         />
         <GiWallet
-          className="absolute top-[-19%] left-[-6%] text-[#FFBB21] text-6xl sm:text-7xl z-10"
+          className="absolute top-[-19%] left-[-6%] text-white text-6xl sm:text-7xl z-10"
           style={{ transform: "rotate(30deg)" }}
         />
         <GiWallet
-          className="absolute top-[-1%] left-[15%] text-[#FFBB21] text-6xl sm:text-7xl z-10"
+          className="absolute top-[-1%] left-[15%] text-white text-6xl sm:text-7xl z-10"
           style={{ transform: "rotate(30deg)" }}
         />
 
         {/* Wallet at 70% from the left top side, rotated 10 deg */}
         <GiWallet
-          className="absolute top-[7%] right-[-2%] text-[#FFBB21] text-6xl sm:text-7xl"
+          className="absolute top-[7%] right-[-2%] text-white text-6xl sm:text-7xl"
           style={{ transform: "rotate(10deg)" }}
         />
         <GiWallet
-          className="absolute top-[-8%] right-[22%] text-[#FFBB21] text-6xl sm:text-7xl"
+          className="absolute top-[-8%] right-[22%] text-white text-6xl sm:text-7xl"
           style={{ transform: "rotate(10deg)" }}
         />
 
         {/* Wallet at top right but half visible */}
-        <GiWallet className="absolute bottom-[1%] right-[35%] text-[#FFBB21] text-6xl sm:text-7xl" />
+        <GiWallet className="absolute bottom-[1%] right-[35%] text-white text-6xl sm:text-7xl" />
 
         {/* Wallet at 20% from bottom and 20% from right, slightly rotated */}
         <TfiWallet
-          className="absolute bottom-[10%] right-[10%] text-[#FFBB21] text-6xl sm:text-7xl"
+          className="absolute bottom-[10%] right-[10%] text-white text-6xl sm:text-7xl"
           style={{ transform: "rotate(-15deg)" }}
         />
 
         {/* Coin icon at 20% from bottom and 20% from left, no rotation */}
-        <TfiWallet className="absolute bottom-[1%] left-[20%] text-[#FFBB21] text-6xl sm:text-7xl" />
+        <TfiWallet className="absolute bottom-[1%] left-[20%] text-white text-6xl sm:text-7xl" />
 
         <div className="z-30 w-2/6">
           <WalletInterface />
