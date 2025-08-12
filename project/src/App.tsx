@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import vide from './assets/Casino Roulette Free Video Background ,Free Stock Footage,No Copyright, Animations.mp4';
+import logo from './assets/trtrtr.gif';
 import { 
   Gamepad2, 
   Menu, 
@@ -250,10 +251,10 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-3">
-            <div className="bg-red-600 p-2 rounded-lg">
+            {/* <div className="bg-red-600 p-2 rounded-lg">
               <Gamepad2 className="h-8 w-8 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">Gaming Solutions</span>
+            </div> */}
+            <img src={logo} alt="Gaming Solutions Logo" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Menu */}
@@ -536,7 +537,7 @@ const HomePage = () => {
 
 
       {/* AI Features Section */}
-      <section className="py-20 bg-gradient-to-r from-gray-50 to-red-50">
+      {/* <section className="py-20 bg-gradient-to-r from-gray-50 to-red-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4 flex items-center justify-center gap-3">
@@ -583,7 +584,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Enhanced Features Section */}
       <section className="py-20 bg-white">
@@ -646,7 +647,7 @@ const HomePage = () => {
       </section>
 
       {/* Success Stories */}
-      <section className="py-20 bg-gradient-to-r from-red-50 to-gray-50">
+      {/* <section className="py-20 bg-gradient-to-r from-red-50 to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
@@ -722,10 +723,10 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-black to-red-900 text-white">
+      {/* <section className="py-20 bg-gradient-to-r from-black to-red-900 text-white">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Ready to Transform Your Gaming Journey?
@@ -746,7 +747,7 @@ const HomePage = () => {
             <ArrowRight />
           </button>
         </div>
-      </section>
+      </section> */}
 
       {/* Modals */}
       <ProblemModal
