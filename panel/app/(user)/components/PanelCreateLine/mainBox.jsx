@@ -133,10 +133,15 @@ const WalletInterface = () => {
           />
 
           {/* Logo */}
-          <img
-            className="w-full h-auto object-cover min-w-[6rem] relative z-10"
-            src="logo-gs.png"
-          />
+          <video
+  className="w-full h-auto object-cover min-w-[6rem] relative z-10"
+  src="gamin.mp4"
+  autoPlay
+  loop
+  muted
+  playsInline
+/>
+
 
           {/* Wallet Balance Text */}
           {user && (
